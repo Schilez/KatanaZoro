@@ -5,4 +5,3 @@
 [node name="RealThemeSound" type="AudioStreamPlayer"]
 stream = ExtResource("1_1rdsh")
 autoplay = true
-stream_paused = true

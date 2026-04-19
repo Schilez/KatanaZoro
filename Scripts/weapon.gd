@@ -22,7 +22,7 @@ func _on_weapon_animated_sprite_2d_animation_finished() -> void:
 
 
 func _on_timer_timeout() -> void:
-	owner.is_attacking=false
+	owner.current_state= Player.State.Base
 
 
 func _on_area_2d_body_entered(body: Node2D) -> void:

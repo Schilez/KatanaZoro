@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bc2evivun28gm"]
+[gd_scene load_steps=15 format=3 uid="uid://bc2evivun28gm"]
 
 [ext_resource type="Script" path="res://Scripts/enemy.gd" id="1_evbcw"]
 [ext_resource type="Texture2D" uid="uid://8yebhs5m60e6" path="res://Assets/Sprites/Sprite-Sheet-1.17.png" id="2_hytvp"]
@@ -75,6 +75,9 @@ size = Vector2(109, 191)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_01pl2"]
 size = Vector2(20, 28.1966)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lp44i"]
+size = Vector2(109, 191)
+
 [node name="Enemy" type="CharacterBody2D" groups=["Enemies"]]
 collision_layer = 2
 collision_mask = 37
@@ -128,6 +131,14 @@ position = Vector2(115, 29)
 
 [node name="stun_timer" type="Timer" parent="."]
 wait_time = 2.0
+
+[node name="HurtBox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+position = Vector2(0.5, 32.5)
+shape = SubResource("RectangleShape2D_lp44i")
 
 [connection signal="body_entered" from="PivotPoint/DetectionArea2d" to="." method="_on_detection_area_2d_body_entered"]
 [connection signal="body_exited" from="PivotPoint/DetectionArea2d" to="." method="_on_detection_area_2d_body_exited"]

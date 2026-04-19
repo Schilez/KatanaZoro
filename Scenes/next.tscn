@@ -1,0 +1,38 @@
+[gd_scene load_steps=6 format=3 uid="uid://c1olhsijh7xdo"]
+
+[ext_resource type="Texture2D" uid="uid://devtl76qg3404" path="res://Assets/Sprites/Sprite-Sheet-1.18.png" id="1_ecd5s"]
+[ext_resource type="Script" path="res://Scripts/next.gd" id="1_g8sgg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c0dh6"]
+size = Vector2(132, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4510w"]
+atlas = ExtResource("1_ecd5s")
+region = Rect2(0, 1536, 256, 256)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xw4o1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4510w")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Next" type="Area2D"]
+collision_layer = 16
+monitoring = false
+script = ExtResource("1_g8sgg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(12, 0)
+shape = SubResource("RectangleShape2D_c0dh6")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+visible = false
+sprite_frames = SubResource("SpriteFrames_xw4o1")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

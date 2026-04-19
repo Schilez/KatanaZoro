@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dv8tldpn0q2pe"]
+
+[ext_resource type="AudioStream" uid="uid://bwt7ykh70368q" path="res://Assets/Sounds/Katana Zero (Ost-Version).mp3" id="1_1rdsh"]
+
+[node name="RealThemeSound" type="AudioStreamPlayer"]
+stream = ExtResource("1_1rdsh")
+autoplay = true
+stream_paused = true

@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://c0ww6euwiy3i6"]
+
+[ext_resource type="Script" path="res://Scripts/finish.gd" id="1_70h5j"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mo5eo"]
+size = Vector2(236, 250)
+
+[node name="finish" type="Area2D"]
+collision_layer = 0
+script = ExtResource("1_70h5j")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_mo5eo")

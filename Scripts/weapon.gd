@@ -12,6 +12,7 @@ func on_attack():
 	look_at(get_global_mouse_position())
 	weapon_animated_sprite_2d.visible=true
 	weapon_area_2d.monitoring=true
+	weapon_area_2d.monitorable=true
 	weapon_animated_sprite_2d.play("Attack")
 	audio_stream_player_2d.play()
 
@@ -19,6 +20,7 @@ func _on_weapon_animated_sprite_2d_animation_finished() -> void:
 	if "Attack" in weapon_animated_sprite_2d.animation:
 		weapon_animated_sprite_2d.visible=false
 		weapon_area_2d.monitoring=false
+		weapon_area_2d.monitorable=false
 
 
 func _on_timer_timeout() -> void:
@@ -29,5 +31,3 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Enemies"):
 		body.queue_free()
 		GameManager.add_kill()
-	elif body.is_in_group("Doors"):
-		body.stun_enemy()

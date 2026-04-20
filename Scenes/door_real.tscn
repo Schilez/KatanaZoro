@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://43w4t20ldvb8"]
+[gd_scene load_steps=9 format=3 uid="uid://43w4t20ldvb8"]
 
 [ext_resource type="Script" path="res://Scripts/door_real.gd" id="1_5osax"]
 [ext_resource type="Texture2D" uid="uid://28acw8ll0q04" path="res://Assets/Sprites/Sprite-Sheet-1.19.png" id="1_kfde5"]
@@ -26,6 +26,9 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dbj2u"]
 size = Vector2(526, 256)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_aeg4d"]
+size = Vector2(56, 256)
+
 [node name="door_real" type="StaticBody2D"]
 collision_layer = 4
 collision_mask = 255
@@ -47,5 +50,14 @@ collision_mask = 2
 position = Vector2(253, 0)
 shape = SubResource("RectangleShape2D_dbj2u")
 
+[node name="HurtBox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+position = Vector2(0.5, 32.5)
+shape = SubResource("RectangleShape2D_aeg4d")
+
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
+[connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]

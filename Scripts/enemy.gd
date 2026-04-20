@@ -166,3 +166,23 @@ func _on_shoot_timer_timeout() -> void:
 
 func _on_stun_timer_timeout() -> void:
 	current_state=State.Stand
+
+
+
+func _on_hurt_box_area_entered(_area: Area2D) -> void:
+	
+	GameManager.add_kill()
+	# 1. Hemen fiziksel dünyadan silinmesini beklemeden katmanları kapat
+	# set_deferred kullanıyoruz çünkü fizik işlemi sırasında direkt maske değiştirmek hata verebilir
+	set_deferred("collision_layer", 0)
+	set_deferred("collision_mask", 0)
+	
+	# 2. Hurtbox'ı da kapat ki tekrar tetiklenmesin
+	$HurtBox.set_deferred("monitoring", false)
+	$HurtBox.set_deferred("monitorable", false)
+	
+	# 3. Hareketini durdur
+	velocity = Vector2.ZERO
+	
+	# 4. Ve sonra yok et (Veya varsa ölüm animasyonu oynat)
+	queue_free()

@@ -47,8 +47,10 @@ animation = &"Attack"
 
 [node name="Area2D" type="Area2D" parent="."]
 position = Vector2(93, 0)
-collision_mask = 7
+collision_layer = 96
+collision_mask = 0
 monitoring = false
+monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(72.75, -9.5)

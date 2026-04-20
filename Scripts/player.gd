@@ -27,9 +27,7 @@ const DODGE_VELOCITY= 1000
 
 
 #State checks
-var is_dodging:=false
 var is_right:=true
-var is_attacking:=false
 var is_touched_floor_after_attack:=true
 var have_throwable:=false
 
@@ -127,12 +125,6 @@ func update_animations(direction):
 		player_animated_sprite_2d.play("DefaultSol")
 		is_right=false
 
-func _on_player_animated_sprite_2d_animation_finished() -> void:
-	if "Takla" in player_animated_sprite_2d.animation:
-		get_tree().call_group("Enemies", "set_collision_mask_value", 1, true)
-		set_collision_mask_value(2,true)
-		current_state=State.Base
-
 func throw():
 	var throwable=projectile_scene.instantiate()
 	get_tree().current_scene.add_child(throwable)
@@ -144,13 +136,6 @@ func throw():
 	throwable.launch(dir_to_throw,"throwable")
 	have_throwable=false
 
-func _on_hurt_box_body_entered(body: Node2D) -> void:
-	if not current_state== State.Dodging:
-		if body.is_in_group("Enemies"):
-			kill()
-		elif  body.get("group")== "bullet":
-			kill()
-
 func handle_camera_look_ahead(delta: float):
 	var target_offset = camera_offset_value if is_right else -camera_offset_value
 	camera_2d.offset.x = lerp(camera_2d.offset.x, target_offset, 5.0*delta)
@@ -159,3 +144,20 @@ func kill():
 	if is_inside_tree():
 		GameManager.kill_count=GameManager.start_kill
 		get_tree().call_deferred("reload_current_scene")
+
+
+func _on_player_animated_sprite_2d_animation_finished() -> void:
+	if "Takla" in player_animated_sprite_2d.animation:
+		get_tree().call_group("Enemies", "set_collision_mask_value", 1, true)
+		set_collision_mask_value(2,true)
+		current_state=State.Base
+
+func _on_hurt_box_body_entered(body: Node2D) -> void:
+	if not current_state== State.Dodging:
+		if body.is_in_group("Enemies"):
+			kill()
+
+func _on_hurt_box_area_entered(area: Area2D) -> void:
+	if not current_state== State.Dodging:
+		if  area.get("group")== "bullet":
+				kill()

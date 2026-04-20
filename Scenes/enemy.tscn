@@ -76,7 +76,7 @@ size = Vector2(109, 191)
 size = Vector2(20, 28.1966)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lp44i"]
-size = Vector2(109, 191)
+size = Vector2(128, 191)
 
 [node name="Enemy" type="CharacterBody2D" groups=["Enemies"]]
 collision_layer = 2
@@ -134,13 +134,14 @@ wait_time = 2.0
 
 [node name="HurtBox" type="Area2D" parent="."]
 collision_layer = 0
-collision_mask = 2
+collision_mask = 32
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
-position = Vector2(0.5, 32.5)
+position = Vector2(0, 32.5)
 shape = SubResource("RectangleShape2D_lp44i")
 
 [connection signal="body_entered" from="PivotPoint/DetectionArea2d" to="." method="_on_detection_area_2d_body_entered"]
 [connection signal="body_exited" from="PivotPoint/DetectionArea2d" to="." method="_on_detection_area_2d_body_exited"]
 [connection signal="timeout" from="shoot_timer" to="." method="_on_shoot_timer_timeout"]
 [connection signal="timeout" from="stun_timer" to="." method="_on_stun_timer_timeout"]
+[connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]

@@ -71,7 +71,6 @@ script = ExtResource("1_bnlwu")
 [node name="Player" parent="." instance=ExtResource("1_q61hn")]
 top_level = true
 position = Vector2(-871, 364)
-collision_mask = 7
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_8pcuu")

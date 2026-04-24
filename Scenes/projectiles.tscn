@@ -22,8 +22,10 @@ animations = [{
 }]
 
 [node name="Projectiles" type="Area2D"]
-collision_layer = 72
-collision_mask = 4
+collision_layer = 0
+collision_mask = 0
+monitoring = false
+monitorable = false
 script = ExtResource("1_cma7n")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -33,4 +35,10 @@ shape = SubResource("RectangleShape2D_a358r")
 scale = Vector2(0.6, 0.6)
 sprite_frames = SubResource("SpriteFrames_kg664")
 
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(57, 0)
+collision_mask = 68
+collide_with_areas = true
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

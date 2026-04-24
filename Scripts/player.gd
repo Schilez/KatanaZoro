@@ -7,6 +7,8 @@ class_name Player
 @onready var camera_2d: Camera2D = $Camera2D
 @onready var left_throw_point: Node2D = $left_throw_point
 @onready var right_throw_point: Node2D = $right_throw_point
+@onready var hurt_box: Area2D = $HurtBox
+
 
 # Instantiate scenes
 const projectile_scene = preload("res://Scenes/projectiles.tscn")
@@ -109,8 +111,8 @@ func handle_attack(delta:float):
 
 func handle_dodge():
 	current_state=State.Dodging
-	get_tree().call_group("Enemies", "set_collision_mask_value", 1, false)
-	set_collision_mask_value(2,false)
+	hurt_box.monitorable=false
+	hurt_box.monitoring=false
 	var dodge_dir = 1 if is_right else -1
 	velocity.x =DODGE_VELOCITY*dodge_dir
 	player_animated_sprite_2d.play("TaklaSağ" if is_right else "TaklaSol")
@@ -133,31 +135,28 @@ func throw():
 	throwable.global_position= start_pos
 	
 	var dir_to_throw:= (get_global_mouse_position()-start_pos).normalized()
-	throwable.launch(dir_to_throw,"throwable")
+	throwable.launch(dir_to_throw,"Throwable")
 	have_throwable=false
 
 func handle_camera_look_ahead(delta: float):
 	var target_offset = camera_offset_value if is_right else -camera_offset_value
 	camera_2d.offset.x = lerp(camera_2d.offset.x, target_offset, 5.0*delta)
 
-func kill():
-	if is_inside_tree():
-		GameManager.kill_count=GameManager.start_kill
-		get_tree().call_deferred("reload_current_scene")
-
+func kill(body):
+	if not current_state==State.Dodging:
+		if body.is_in_group("Enemies") or body.is_in_group("Bullet"):
+			if is_inside_tree():
+				GameManager.kill_count=GameManager.start_kill
+				get_tree().call_deferred("reload_current_scene")
 
 func _on_player_animated_sprite_2d_animation_finished() -> void:
 	if "Takla" in player_animated_sprite_2d.animation:
-		get_tree().call_group("Enemies", "set_collision_mask_value", 1, true)
-		set_collision_mask_value(2,true)
+		hurt_box.monitorable=true
+		hurt_box.monitoring=true
 		current_state=State.Base
 
 func _on_hurt_box_body_entered(body: Node2D) -> void:
-	if not current_state== State.Dodging:
-		if body.is_in_group("Enemies"):
-			kill()
+	kill(body)
 
 func _on_hurt_box_area_entered(area: Area2D) -> void:
-	if not current_state== State.Dodging:
-		if  area.get("group")== "bullet":
-				kill()
+	kill(area)

@@ -10,6 +10,7 @@ extends CharacterBody2D
 @onready var bullet_point_left: Node2D = $bullet_point_left
 @onready var bullet_point_right: Node2D = $bullet_point_right
 @onready var stun_timer: Timer = $stun_timer
+@onready var hurt_box: Area2D = $HurtBox
 
 
 
@@ -50,7 +51,8 @@ func _physics_process(delta: float) -> void:
 	
 	handle_flip()
 	
-	can_see_player= check_line_of_sight()
+	if is_in_range:
+		can_see_player= check_line_of_sight()
 	
 	match current_state:
 		State.Patrol:
@@ -151,38 +153,33 @@ func shoot():
 	
 	var dir_to_player=(player.global_position-global_position).normalized()
 	
-	projectile.launch(dir_to_player,"bullet")
+	projectile.launch(dir_to_player,"Bullet")
 
 func apply_stun():
 	current_state=State.Stunned
 	animated_sprite_2d.play("Stunned")
 	stun_timer.start()
 
-
+func kill():
+	GameManager.add_kill()
+	queue_free()
+	
+	visible=false
+	
+	collision_layer=0
+	collision_mask=0
+	
+	set_physics_process(false)
+	set_process(false)
 
 func _on_shoot_timer_timeout() -> void:
 	can_shoot=true
 
 
 func _on_stun_timer_timeout() -> void:
-	current_state=State.Stand
+	current_state=State.Patrol
 
 
 
 func _on_hurt_box_area_entered(_area: Area2D) -> void:
-	
-	GameManager.add_kill()
-	# 1. Hemen fiziksel dünyadan silinmesini beklemeden katmanları kapat
-	# set_deferred kullanıyoruz çünkü fizik işlemi sırasında direkt maske değiştirmek hata verebilir
-	set_deferred("collision_layer", 0)
-	set_deferred("collision_mask", 0)
-	
-	# 2. Hurtbox'ı da kapat ki tekrar tetiklenmesin
-	$HurtBox.set_deferred("monitoring", false)
-	$HurtBox.set_deferred("monitorable", false)
-	
-	# 3. Hareketini durdur
-	velocity = Vector2.ZERO
-	
-	# 4. Ve sonra yok et (Veya varsa ölüm animasyonu oynat)
-	queue_free()
+	kill()

@@ -69,10 +69,11 @@ Throw={
 
 [layer_names]
 
-2d_physics/layer_1="Player"
-2d_physics/layer_2="Enemies"
-2d_physics/layer_3="World"
+2d_physics/layer_1="PlayerBody"
+2d_physics/layer_2="EnemiesBody"
+2d_physics/layer_3="WorldBody"
 2d_physics/layer_4="WeaponLayer"
 2d_physics/layer_5="PlayerHurtbox"
 2d_physics/layer_6="EnemyHurtBox"
 2d_physics/layer_7="DoorHurtBox"
+2d_physics/layer_8="ObjectsLayer"

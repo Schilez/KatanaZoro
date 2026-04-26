@@ -22,7 +22,7 @@ animations = [{
 }]
 
 [node name="Throwable" type="Area2D"]
-collision_layer = 64
+collision_layer = 128
 script = ExtResource("1_1qoao")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

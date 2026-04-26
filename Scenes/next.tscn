@@ -22,7 +22,7 @@ animations = [{
 }]
 
 [node name="Next" type="Area2D"]
-collision_layer = 16
+collision_layer = 128
 monitoring = false
 script = ExtResource("1_g8sgg")
 

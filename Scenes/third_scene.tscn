@@ -75,6 +75,7 @@ position = Vector2(569, -640)
 rotation = 3.14159
 
 [node name="TileMap" type="TileMap" parent="."]
+z_index = -10
 tile_set = SubResource("TileSet_5sj3v")
 format = 2
 layer_0/name = "Ground"
@@ -91,16 +92,17 @@ unique_name_in_owner = true
 position = Vector2(-494, 128)
 
 [node name="oneway_platform" parent="." instance=ExtResource("5_awe27")]
+z_index = 1
 position = Vector2(2807, -505)
 scale = Vector2(5.91112, 0.705612)
 
 [node name="Throwable" parent="." instance=ExtResource("6_il1pw")]
+z_index = -1
 position = Vector2(2377, 128)
-collision_layer = 4
 
 [node name="Throwable2" parent="." instance=ExtResource("6_il1pw")]
+z_index = -1
 position = Vector2(2196, -641)
-collision_layer = 4
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -149,9 +151,9 @@ text = "0"
 horizontal_alignment = 1
 
 [node name="Next" parent="." instance=ExtResource("9_loboe")]
+z_index = -1
 position = Vector2(5185, -631)
 rotation = -1.5809
-collision_layer = 4
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2(60, 0)
@@ -165,40 +167,49 @@ shape = SubResource("RectangleShape2D_qxkpd")
 [node name="Node" type="Node" parent="."]
 
 [node name="Enemy" parent="Node" instance=ExtResource("4_o3t46")]
+z_index = 1
 position = Vector2(824, 129)
 
 [node name="Enemy2" parent="Node" instance=ExtResource("4_o3t46")]
+z_index = 1
 position = Vector2(1990, 129)
 is_right = false
 
 [node name="Enemy4" parent="Node" instance=ExtResource("4_o3t46")]
+z_index = 1
 position = Vector2(982, -640)
 is_gunman = true
 
 [node name="Enemy8" parent="Node" instance=ExtResource("4_o3t46")]
+z_index = 1
 position = Vector2(398, -644)
 current_state = 0
 is_right = false
 
 [node name="Enemy9" parent="Node" instance=ExtResource("4_o3t46")]
+z_index = 1
 position = Vector2(-463, -640)
 is_gunman = true
 
 [node name="Enemy5" parent="Node" instance=ExtResource("4_o3t46")]
+z_index = 1
 position = Vector2(1492, -640)
 current_state = 0
 
 [node name="Enemy6" parent="Node" instance=ExtResource("4_o3t46")]
+z_index = 1
 position = Vector2(3374, -640)
 current_state = 0
 is_right = false
 
 [node name="Enemy7" parent="Node" instance=ExtResource("4_o3t46")]
+z_index = 1
 position = Vector2(4815, -640)
 is_gunman = true
 is_right = false
 
 [node name="Enemy3" parent="Node" instance=ExtResource("4_o3t46")]
+z_index = 1
 position = Vector2(1172, 128)
 is_gunman = true
 current_state = 0

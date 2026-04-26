@@ -177,7 +177,11 @@ func _on_shoot_timer_timeout() -> void:
 
 
 func _on_stun_timer_timeout() -> void:
-	current_state=State.Patrol
+	current_state=State.Stand
+	if is_gunman:
+		animated_sprite_2d.play("GunMan")
+	else:
+		animated_sprite_2d.play("Normal")
 
 
 

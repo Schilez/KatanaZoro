@@ -17,6 +17,7 @@ func _physics_process(delta: float) -> void:
 
 func launch (target_dir: Vector2,source_group: String ):
 	direction= target_dir.normalized()
+	global_rotation=direction.angle()
 	group= source_group
 	add_to_group(source_group)
 	

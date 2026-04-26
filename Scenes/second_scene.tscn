@@ -91,7 +91,6 @@ script = ExtResource("1_yq24b")
 
 [node name="Player" parent="." instance=ExtResource("1_3r0pv")]
 unique_name_in_owner = true
-z_index = 2
 position = Vector2(-81, 250)
 
 [node name="Enemy" parent="." instance=ExtResource("2_ebyon")]
@@ -118,6 +117,7 @@ is_gunman = true
 is_right = false
 
 [node name="TileMap" type="TileMap" parent="."]
+z_index = -10
 tile_set = SubResource("TileSet_1fcf0")
 format = 2
 layer_0/name = "Ground"
@@ -132,6 +132,7 @@ layer_2/tile_data = PackedInt32Array(-327690, 524290, 0, -262154, 524290, 0, -19
 position = Vector2(1218, 256)
 
 [node name="Throwable" parent="." instance=ExtResource("6_wh0vi")]
+z_index = -1
 position = Vector2(-669, 256)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -181,8 +182,8 @@ text = "0"
 horizontal_alignment = 1
 
 [node name="Next" parent="." instance=ExtResource("9_rwq5q")]
+z_index = -1
 position = Vector2(5325, -390)
-collision_layer = 4
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2(5665, -422)

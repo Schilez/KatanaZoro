@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://ipvegy7blen4"]
+[gd_scene load_steps=18 format=3 uid="uid://ipvegy7blen4"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_w8xn6"]
 [ext_resource type="Texture2D" uid="uid://dd3gbccw8v6rs" path="res://Assets/Sprites/Sprite-Sheet-1.4.png" id="2_g6eji"]
@@ -15,10 +15,6 @@ region = Rect2(0, 0, 256, 256)
 atlas = ExtResource("4_1mkq7")
 region = Rect2(1024, 0, 256, 256)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_7om11"]
-atlas = ExtResource("2_k1513")
-region = Rect2(0, 0, 256, 256)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_6q70p"]
 atlas = ExtResource("2_k1513")
 region = Rect2(256, 0, 256, 256)
@@ -30,10 +26,6 @@ region = Rect2(512, 0, 256, 256)
 [sub_resource type="AtlasTexture" id="AtlasTexture_p4m81"]
 atlas = ExtResource("2_k1513")
 region = Rect2(768, 0, 256, 256)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_jaccm"]
-atlas = ExtResource("4_1mkq7")
-region = Rect2(1024, 0, 256, 256)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kjyvq"]
 atlas = ExtResource("4_1mkq7")
@@ -66,9 +58,6 @@ animations = [{
 "speed": 1.0
 }, {
 "frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_7om11")
-}, {
 "duration": 0.4,
 "texture": SubResource("AtlasTexture_6q70p")
 }, {
@@ -80,12 +69,9 @@ animations = [{
 }],
 "loop": false,
 "name": &"TaklaSağ",
-"speed": 6.0
+"speed": 5.0
 }, {
 "frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_jaccm")
-}, {
 "duration": 0.4,
 "texture": SubResource("AtlasTexture_kjyvq")
 }, {
@@ -97,15 +83,15 @@ animations = [{
 }],
 "loop": false,
 "name": &"TaklaSol",
-"speed": 6.0
+"speed": 5.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ktu6p"]
 radius = 54.0
-height = 189.0
+height = 194.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8ddup"]
-size = Vector2(119, 191)
+size = Vector2(107, 191)
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 collision_mask = 4
@@ -113,13 +99,14 @@ script = ExtResource("1_w8xn6")
 
 [node name="PlayerAnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_tlnhx")
-animation = &"TaklaSağ"
+animation = &"DefaultSağ"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 31)
 shape = SubResource("CapsuleShape2D_ktu6p")
 
 [node name="Weapon" parent="." instance=ExtResource("5_pdawe")]
+z_index = 10
 position = Vector2(0, 32)
 
 [node name="PlayerHurtBox" type="Area2D" parent="."]
@@ -128,7 +115,7 @@ collision_mask = 32
 script = ExtResource("6_cjty7")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerHurtBox"]
-position = Vector2(-0.5, 32.5)
+position = Vector2(0.5, 32.5)
 shape = SubResource("RectangleShape2D_8ddup")
 
 [node name="Camera2D" type="Camera2D" parent="."]

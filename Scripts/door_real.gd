@@ -19,7 +19,11 @@ func _on_area_2d_body_exited(body: Node2D) -> void:
 	if body.is_in_group("Enemies"):
 		enemy_in_range.erase(body)
 
-
-func _on_hurt_box_area_entered(_area: Area2D) -> void:
+func kill():
 	stun_enemy()
 	queue_free()
+
+
+
+func _on_door_hurt_box_was_hit() -> void:
+	kill()

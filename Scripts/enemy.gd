@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
-@onready var player: CharacterBody2D = $"../Player"
+@onready var player: Player = %Player
 @onready var pivot_point: Node2D = $PivotPoint
 @onready var ray_casat_left: RayCast2D = $RayCasatLeft
 @onready var ray_cast_right: RayCast2D = $RayCastRight
@@ -10,7 +10,7 @@ extends CharacterBody2D
 @onready var bullet_point_left: Node2D = $bullet_point_left
 @onready var bullet_point_right: Node2D = $bullet_point_right
 @onready var stun_timer: Timer = $stun_timer
-@onready var hurt_box: Area2D = $HurtBox
+
 
 
 

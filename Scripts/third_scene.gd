@@ -1,5 +1,5 @@
 extends Node2D
-@onready var player: CharacterBody2D = $Player
+@onready var player: CharacterBody2D = %Player
 @onready var margin_container: MarginContainer = $CanvasLayer/MarginContainer
 @onready var next: Area2D = $Next
 const END = preload("res://Scenes/end.tscn")

@@ -90,6 +90,7 @@ size = Vector2(94, 385)
 script = ExtResource("1_yq24b")
 
 [node name="Player" parent="." instance=ExtResource("1_3r0pv")]
+unique_name_in_owner = true
 z_index = 2
 position = Vector2(-81, 250)
 
@@ -181,9 +182,12 @@ horizontal_alignment = 1
 
 [node name="Next" parent="." instance=ExtResource("9_rwq5q")]
 position = Vector2(5325, -390)
+collision_layer = 4
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2(5665, -422)
+collision_layer = 4
+collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2(-21, -26.5)

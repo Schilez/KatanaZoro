@@ -1,10 +1,11 @@
-[gd_scene load_steps=21 format=3 uid="uid://ipvegy7blen4"]
+[gd_scene load_steps=20 format=3 uid="uid://ipvegy7blen4"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_w8xn6"]
 [ext_resource type="Texture2D" uid="uid://dd3gbccw8v6rs" path="res://Assets/Sprites/Sprite-Sheet-1.4.png" id="2_g6eji"]
 [ext_resource type="Texture2D" uid="uid://c6873feer58xu" path="res://Assets/Sprites/Sprite-Sheet-1.3.png" id="2_k1513"]
 [ext_resource type="Texture2D" uid="uid://cyi37fwgugudg" path="res://Assets/Sprites/Sprite-Sheet-1.5.png" id="4_1mkq7"]
 [ext_resource type="PackedScene" uid="uid://c1wuluik1s1lk" path="res://Scenes/weapon.tscn" id="5_pdawe"]
+[ext_resource type="Script" path="res://Scripts/player_hurt_box.gd" id="6_cjty7"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nmhua"]
 atlas = ExtResource("2_g6eji")
@@ -30,10 +31,6 @@ region = Rect2(512, 0, 256, 256)
 atlas = ExtResource("2_k1513")
 region = Rect2(768, 0, 256, 256)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_awdrn"]
-atlas = ExtResource("2_k1513")
-region = Rect2(0, 0, 256, 256)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_jaccm"]
 atlas = ExtResource("4_1mkq7")
 region = Rect2(1024, 0, 256, 256)
@@ -49,10 +46,6 @@ region = Rect2(512, 0, 256, 256)
 [sub_resource type="AtlasTexture" id="AtlasTexture_0puby"]
 atlas = ExtResource("4_1mkq7")
 region = Rect2(1536, 0, 256, 256)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ecfet"]
-atlas = ExtResource("4_1mkq7")
-region = Rect2(1024, 0, 256, 256)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_tlnhx"]
 animations = [{
@@ -76,41 +69,35 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_7om11")
 }, {
-"duration": 0.5,
+"duration": 0.4,
 "texture": SubResource("AtlasTexture_6q70p")
 }, {
 "duration": 2.0,
 "texture": SubResource("AtlasTexture_3en22")
 }, {
-"duration": 0.5,
+"duration": 0.4,
 "texture": SubResource("AtlasTexture_p4m81")
-}, {
-"duration": 0.01,
-"texture": SubResource("AtlasTexture_awdrn")
 }],
 "loop": false,
 "name": &"TaklaSağ",
-"speed": 6.7
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_jaccm")
 }, {
-"duration": 0.5,
+"duration": 0.4,
 "texture": SubResource("AtlasTexture_kjyvq")
 }, {
 "duration": 2.0,
 "texture": SubResource("AtlasTexture_yqe1x")
 }, {
-"duration": 0.5,
+"duration": 0.4,
 "texture": SubResource("AtlasTexture_0puby")
-}, {
-"duration": 0.01,
-"texture": SubResource("AtlasTexture_ecfet")
 }],
 "loop": false,
 "name": &"TaklaSol",
-"speed": 6.7
+"speed": 6.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ktu6p"]
@@ -126,7 +113,7 @@ script = ExtResource("1_w8xn6")
 
 [node name="PlayerAnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_tlnhx")
-animation = &"DefaultSağ"
+animation = &"TaklaSağ"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 31)
@@ -135,11 +122,12 @@ shape = SubResource("CapsuleShape2D_ktu6p")
 [node name="Weapon" parent="." instance=ExtResource("5_pdawe")]
 position = Vector2(0, 32)
 
-[node name="HurtBox" type="Area2D" parent="."]
+[node name="PlayerHurtBox" type="Area2D" parent="."]
 collision_layer = 16
 collision_mask = 32
+script = ExtResource("6_cjty7")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerHurtBox"]
 position = Vector2(-0.5, 32.5)
 shape = SubResource("RectangleShape2D_8ddup")
 
@@ -156,5 +144,6 @@ position = Vector2(-75, 18)
 position = Vector2(80, 17)
 
 [connection signal="animation_finished" from="PlayerAnimatedSprite2D" to="." method="_on_player_animated_sprite_2d_animation_finished"]
-[connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
-[connection signal="body_entered" from="HurtBox" to="." method="_on_hurt_box_body_entered"]
+[connection signal="area_entered" from="PlayerHurtBox" to="PlayerHurtBox" method="_on_area_entered"]
+[connection signal="body_entered" from="PlayerHurtBox" to="PlayerHurtBox" method="_on_body_entered"]
+[connection signal="was_hit" from="PlayerHurtBox" to="." method="_on_player_hurt_box_was_hit"]

@@ -8,33 +8,31 @@ var direction := Vector2.ZERO
 var group := ""
 
 func _physics_process(delta: float) -> void:
-	
-	
 	var move_vector:= direction*SPEED*delta
 	position += move_vector
 	ray_cast_2d.target_position=to_local(global_position+move_vector)
 	
-	ray_cast_2d.force_raycast_update()
-	
-	if ray_cast_2d.is_colliding():
-		kill()
+	trigger()
+
 
 func launch (target_dir: Vector2,source_group: String ):
 	direction= target_dir.normalized()
 	group= source_group
 	add_to_group(source_group)
 	
-	
 	if group=="Bullet":
 		ray_cast_2d.set_collision_mask_value(5, true)
 	elif group=="Throwable":
 		ray_cast_2d.set_collision_mask_value(6,true)
+		ray_cast_2d.set_collision_mask_value(7,true)
 
-
-
-
-func _on_body_entered(_body: Node2D) -> void:
-	kill()
+func trigger():
+	ray_cast_2d.force_raycast_update()
+	if ray_cast_2d.is_colliding():
+		var body= ray_cast_2d.get_collider()
+		if body.has_method("hit"):
+			body.hit()
+		kill()
 
 func kill():
 	visible=false
@@ -43,9 +41,3 @@ func kill():
 	set_physics_process(false)
 	set_process(false)
 	queue_free()
-
-
-
-
-func _on_area_entered(area: Area2D) -> void:
-	kill()

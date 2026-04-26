@@ -2,7 +2,7 @@ extends Node2D
 @onready var next: Area2D = $Next
 const SECOND_SCENE = preload("res://Scenes/second_scene.tscn")
 @onready var tile_map: TileMap = $TileMap
-@onready var player: CharacterBody2D = $Player
+@onready var player: CharacterBody2D = %Player
 @onready var label: Label = $CanvasLayer/Label
 
 

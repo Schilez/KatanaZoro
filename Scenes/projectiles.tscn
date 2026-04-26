@@ -37,8 +37,5 @@ sprite_frames = SubResource("SpriteFrames_kg664")
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
 target_position = Vector2(57, 0)
-collision_mask = 68
+collision_mask = 4
 collide_with_areas = true
-
-[connection signal="area_entered" from="." to="." method="_on_area_entered"]
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]

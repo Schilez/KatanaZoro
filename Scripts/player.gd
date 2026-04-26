@@ -7,7 +7,7 @@ class_name Player
 @onready var camera_2d: Camera2D = $Camera2D
 @onready var left_throw_point: Node2D = $left_throw_point
 @onready var right_throw_point: Node2D = $right_throw_point
-@onready var hurt_box: Area2D = $HurtBox
+@onready var player_hurt_box: Area2D = $PlayerHurtBox
 
 
 # Instantiate scenes
@@ -99,8 +99,8 @@ func handle_attack(delta:float):
 	
 	velocity =(mouse_pos-pos).normalized()*1000
 	
-	velocity.x= move_toward(velocity.x,0,3000*delta)
-	velocity.y= move_toward(velocity.y,0,3000*delta)
+	velocity.x= move_toward(velocity.x,0,5000*delta)
+	velocity.y= move_toward(velocity.y,0,5000*delta)
 	
 	if mouse_pos.x>pos.x:
 		player_animated_sprite_2d.play("DefaultSağ")
@@ -111,8 +111,9 @@ func handle_attack(delta:float):
 
 func handle_dodge():
 	current_state=State.Dodging
-	hurt_box.monitorable=false
-	hurt_box.monitoring=false
+	player_hurt_box.monitorable=false
+	player_hurt_box.monitoring=false
+	player_hurt_box.set_collision_layer_value(5,false)
 	var dodge_dir = 1 if is_right else -1
 	velocity.x =DODGE_VELOCITY*dodge_dir
 	player_animated_sprite_2d.play("TaklaSağ" if is_right else "TaklaSol")
@@ -142,21 +143,22 @@ func handle_camera_look_ahead(delta: float):
 	var target_offset = camera_offset_value if is_right else -camera_offset_value
 	camera_2d.offset.x = lerp(camera_2d.offset.x, target_offset, 5.0*delta)
 
-func kill(body):
+func kill():
 	if not current_state==State.Dodging:
-		if body.is_in_group("Enemies") or body.is_in_group("Bullet"):
 			if is_inside_tree():
 				GameManager.kill_count=GameManager.start_kill
 				get_tree().call_deferred("reload_current_scene")
 
 func _on_player_animated_sprite_2d_animation_finished() -> void:
 	if "Takla" in player_animated_sprite_2d.animation:
-		hurt_box.monitorable=true
-		hurt_box.monitoring=true
+		player_hurt_box.monitorable=true
+		player_hurt_box.monitoring=true
+		player_hurt_box.set_collision_layer_value(5,true)
 		current_state=State.Base
+		if is_right:
+			player_animated_sprite_2d.play("DefaultSağ")
+		else:
+			player_animated_sprite_2d.play("DefaultSol")
 
-func _on_hurt_box_body_entered(body: Node2D) -> void:
-	kill(body)
-
-func _on_hurt_box_area_entered(area: Area2D) -> void:
-	kill(area)
+func _on_player_hurt_box_was_hit() -> void:
+	kill()

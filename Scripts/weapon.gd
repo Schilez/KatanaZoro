@@ -24,4 +24,4 @@ func _on_weapon_animated_sprite_2d_animation_finished() -> void:
 
 
 func _on_timer_timeout() -> void:
-	owner.current_state= Player.State.Base
+	owner.state_change(Player.State.Base)

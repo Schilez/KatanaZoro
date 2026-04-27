@@ -91,32 +91,18 @@ func handle_gravity(delta:float):
 	velocity += get_gravity() * gravity_mult * delta
 
 func handle_attack(delta:float):
+	state_change(State.Attacking)
 	var mouse_pos=get_global_mouse_position()
 	var pos=global_position
 	current_state= State.Attacking
-	is_touched_floor_after_attack=false
-	weapon.on_attack()
-	
 	velocity =(mouse_pos-pos).normalized()*1000
-	
 	velocity.x= move_toward(velocity.x,0,5000*delta)
 	velocity.y= move_toward(velocity.y,0,5000*delta)
-	
-	if mouse_pos.x>pos.x:
-		player_animated_sprite_2d.play("DefaultSağ")
-		is_right=true
-	elif mouse_pos.x<pos.x:
-		player_animated_sprite_2d.play("DefaultSol")
-		is_right=false
 
 func handle_dodge():
-	current_state=State.Dodging
-	player_hurt_box.monitorable=false
-	player_hurt_box.monitoring=false
-	player_hurt_box.set_collision_layer_value(5,false)
+	state_change(State.Dodging)
 	var dodge_dir = 1 if is_right else -1
 	velocity.x =DODGE_VELOCITY*dodge_dir
-	player_animated_sprite_2d.play("TaklaSağ" if is_right else "TaklaSol")
 
 func update_animations(direction):
 	if not current_state==State.Base:
@@ -149,16 +135,47 @@ func kill():
 				GameManager.kill_count=GameManager.start_kill
 				get_tree().call_deferred("reload_current_scene")
 
+func state_change(state: State):
+	match current_state:
+		State.Dodging:
+			player_hurt_box.monitorable=true
+			player_hurt_box.monitoring=true
+			player_hurt_box.set_collision_layer_value(5,true)
+		State.Attacking:
+			pass
+		State.Base:
+			pass
+	
+	current_state=state
+	
+	match current_state:
+		State.Dodging:
+			player_hurt_box.monitorable=false
+			player_hurt_box.monitoring=false
+			player_hurt_box.set_collision_layer_value(5,false)
+			player_animated_sprite_2d.play("TaklaSağ" if is_right else "TaklaSol")
+		State.Attacking:
+			is_touched_floor_after_attack=false
+			weapon.on_attack()
+			var mouse_pos=get_global_mouse_position()
+			var pos=global_position
+			if mouse_pos.x>pos.x:
+				player_animated_sprite_2d.play("DefaultSağ")
+				is_right=true
+			elif mouse_pos.x<pos.x:
+				player_animated_sprite_2d.play("DefaultSol")
+				is_right=false
+		State.Base:
+			if is_right:
+				player_animated_sprite_2d.play("DefaultSağ")
+			else:
+				player_animated_sprite_2d.play("DefaultSol")
+
+
+
 func _on_player_animated_sprite_2d_animation_finished() -> void:
 	if "Takla" in player_animated_sprite_2d.animation:
-		player_hurt_box.monitorable=true
-		player_hurt_box.monitoring=true
-		player_hurt_box.set_collision_layer_value(5,true)
-		current_state=State.Base
-		if is_right:
-			player_animated_sprite_2d.play("DefaultSağ")
-		else:
-			player_animated_sprite_2d.play("DefaultSol")
+		state_change(State.Base)
 
 func _on_player_hurt_box_was_hit() -> void:
 	kill()

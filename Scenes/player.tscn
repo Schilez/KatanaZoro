@@ -61,7 +61,7 @@ animations = [{
 "duration": 0.4,
 "texture": SubResource("AtlasTexture_6q70p")
 }, {
-"duration": 2.0,
+"duration": 1.2,
 "texture": SubResource("AtlasTexture_3en22")
 }, {
 "duration": 0.4,
@@ -75,7 +75,7 @@ animations = [{
 "duration": 0.4,
 "texture": SubResource("AtlasTexture_kjyvq")
 }, {
-"duration": 2.0,
+"duration": 1.2,
 "texture": SubResource("AtlasTexture_yqe1x")
 }, {
 "duration": 0.4,
@@ -121,6 +121,8 @@ shape = SubResource("RectangleShape2D_8ddup")
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(3, -172)
 zoom = Vector2(0.75, 0.75)
+drag_horizontal_enabled = true
+drag_horizontal_offset = 0.1
 drag_left_margin = 0.1
 drag_right_margin = 0.1
 
@@ -130,7 +132,13 @@ position = Vector2(-75, 18)
 [node name="right_throw_point" type="Node2D" parent="." groups=["Player"]]
 position = Vector2(80, 17)
 
+[node name="attack_timer" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
 [connection signal="animation_finished" from="PlayerAnimatedSprite2D" to="." method="_on_player_animated_sprite_2d_animation_finished"]
+[connection signal="attack_finished" from="Weapon" to="." method="_on_weapon_attack_finished"]
 [connection signal="area_entered" from="PlayerHurtBox" to="PlayerHurtBox" method="_on_area_entered"]
 [connection signal="body_entered" from="PlayerHurtBox" to="PlayerHurtBox" method="_on_body_entered"]
 [connection signal="was_hit" from="PlayerHurtBox" to="." method="_on_player_hurt_box_was_hit"]
+[connection signal="timeout" from="attack_timer" to="." method="_on_attack_timer_timeout"]

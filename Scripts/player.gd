@@ -1,47 +1,56 @@
 extends CharacterBody2D
 class_name Player
 
-# Referance variables
+#Referance variables
 @onready var player_animated_sprite_2d: AnimatedSprite2D = $PlayerAnimatedSprite2D
 @onready var weapon: Node2D = $Weapon
 @onready var camera_2d: Camera2D = $Camera2D
 @onready var left_throw_point: Node2D = $left_throw_point
 @onready var right_throw_point: Node2D = $right_throw_point
 @onready var player_hurt_box: Area2D = $PlayerHurtBox
+@onready var attack_timer: Timer = $attack_timer
 
-
-# Instantiate scenes
+#Instantiate scenes
 const projectile_scene = preload("res://Scenes/projectiles.tscn")
 
 #Camera variables
 var camera_offset_value:=200.0
+var camera_offset_speed:=2.5
 
 #Movment variables
-const SPEED = 750
-const JUMP_VELOCITY_UP = -650
-const JUMP_VELOCITY_FRONT= 120
-const DODGE_VELOCITY= 1000
+const SPEED:= 750
+const ACCELERATION_ON_FLOOR := 2000
+const ACCELERATION_ON_AIR := 750
+const FRICTION_ON_FLOOR := 1000
+const FRICTION_ON_AIR := 500
+#Jump movment variables
+const JUMP_VELOCITY_UP:= -650
+const JUMP_VELOCITY_FRONT:= 120
+#Dodge movment variables
+const DODGE_VELOCITY:= 1000
+const DODGE_FRICTION := 600
+#Attack movment variables
+const ATTACK_VELOCITY := 1000
+const ATTACK_FRICTION := 2000
 
 #Gravity variables
-@export var base_gravity:=1.5
-@export var dodge_gravity:=2.0
-@export var attack_gravity:= 4.0
+var base_gravity:=1.5
+var dodge_gravity:=2.0
+var attack_gravity:= 4.0
 
 
-#State checks
+#Bools
 var is_right:=true
-var is_touched_floor_after_attack:=true
-var have_throwable:=false
+var is_touched_floor_after_attack:= true
+var have_throwable:= false
+var can_attack := true
 
 # State Machine
 enum State {Base, Dodging, Attacking}
 var current_state: State= State.Base
 
+
 func _physics_process(delta: float) -> void:
-	
-	# Handle LeftandRight Input
-	var direction := Input.get_axis("move_left", "move_right")
-	
 	#Handle Camera
 	handle_camera_look_ahead(delta)
 	
@@ -53,60 +62,62 @@ func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		handle_gravity(delta)
 	
-	#State Actions
+	#State physics
 	match current_state:
 		State.Base:
-			# Handle jump.
-			if Input.is_action_just_pressed("jump") and is_on_floor():
-				velocity.y = JUMP_VELOCITY_UP
-				velocity.x += JUMP_VELOCITY_FRONT*direction
-			
-			# Handle attack
-			if Input.is_action_just_pressed("Attack") and is_touched_floor_after_attack:
-				handle_attack(delta)
-			
-			#Handle throw
-			if Input.is_action_just_pressed("Throw") and have_throwable:
-				throw()
-			
-			#Handle dodge
-			if  Input.is_action_just_pressed("Dodge"):
-				handle_dodge()
+			handle_base_physics(delta)
+		State.Attacking:
+			handle_attack_physics(delta)
+		State.Dodging:
+			handle_dodge_physics(delta)
 	
-	#Handle movment
-	if current_state==State.Attacking:
-		velocity.x=move_toward(velocity.x,0,30)
-	elif current_state==State.Dodging:
-		velocity.x=move_toward(velocity.x,0,10)
-	else:
-		update_animations(direction)
-		if not direction==0:
-			velocity.x= move_toward(velocity.x,direction*SPEED,2000*delta) if is_on_floor() else move_toward(velocity.x,direction*SPEED,500*delta)
-		elif direction==0:
-			velocity.x=move_toward(velocity.x,0,1000*delta) if is_on_floor() else move_toward(velocity.x,0,120*delta)
 	move_and_slide()
 
+#Base state physics
+func handle_base_physics(delta: float):
+	var direction := Input.get_axis("move_left", "move_right")
+	update_animations(direction)
+	
+	var target_vel= SPEED*direction
+	
+	if not direction==0:
+		var acceleration= ACCELERATION_ON_FLOOR if is_on_floor() else ACCELERATION_ON_AIR
+		velocity.x= move_toward(velocity.x,target_vel,acceleration*delta)
+	else:
+		var friction= FRICTION_ON_FLOOR if is_on_floor() else FRICTION_ON_AIR
+		velocity.x= move_toward(velocity.x,target_vel,friction*delta)
+	
+	
+	if Input.is_action_just_pressed("jump") and is_on_floor():
+		velocity.y = JUMP_VELOCITY_UP
+		velocity.x += JUMP_VELOCITY_FRONT*direction
+	
+	if Input.is_action_just_pressed("Attack") and is_touched_floor_after_attack:
+		if can_attack:
+			state_change(State.Attacking)
+	
+	if  Input.is_action_just_pressed("Dodge"):
+		state_change(State.Dodging)
+	
+	if Input.is_action_just_pressed("Throw") and have_throwable:
+		throw()
+
+#Attacking state physics
+func handle_attack_physics(delta:float):
+	velocity.x= move_toward(velocity.x,0,ATTACK_FRICTION*delta)
+	velocity.y= move_toward(velocity.y,0,ATTACK_FRICTION*delta)
+
+#Dodging state physics
+func handle_dodge_physics(delta:float):
+	velocity.x=move_toward(velocity.x,0,DODGE_FRICTION*delta)
+
+#Handle gravity
 func handle_gravity(delta:float):
 	var gravity_mult:= attack_gravity if current_state==State.Attacking else (dodge_gravity if current_state==State.Dodging else base_gravity)
 	velocity += get_gravity() * gravity_mult * delta
 
-func handle_attack(delta:float):
-	state_change(State.Attacking)
-	var mouse_pos=get_global_mouse_position()
-	var pos=global_position
-	current_state= State.Attacking
-	velocity =(mouse_pos-pos).normalized()*1000
-	velocity.x= move_toward(velocity.x,0,5000*delta)
-	velocity.y= move_toward(velocity.y,0,5000*delta)
-
-func handle_dodge():
-	state_change(State.Dodging)
-	var dodge_dir = 1 if is_right else -1
-	velocity.x =DODGE_VELOCITY*dodge_dir
-
+#Animation update
 func update_animations(direction):
-	if not current_state==State.Base:
-		return
 	if direction>0:
 		player_animated_sprite_2d.play("DefaultSağ")
 		is_right=true
@@ -114,6 +125,7 @@ func update_animations(direction):
 		player_animated_sprite_2d.play("DefaultSol")
 		is_right=false
 
+#Handle throw
 func throw():
 	var throwable=projectile_scene.instantiate()
 	get_tree().current_scene.add_child(throwable)
@@ -125,16 +137,19 @@ func throw():
 	throwable.launch(dir_to_throw,"Throwable")
 	have_throwable=false
 
+#Handle camera
 func handle_camera_look_ahead(delta: float):
 	var target_offset = camera_offset_value if is_right else -camera_offset_value
-	camera_2d.offset.x = lerp(camera_2d.offset.x, target_offset, 5.0*delta)
+	camera_2d.offset.x = lerp(camera_2d.offset.x, target_offset,camera_offset_speed*delta)
 
+#Handle death
 func kill():
 	if not current_state==State.Dodging:
 			if is_inside_tree():
 				GameManager.kill_count=GameManager.start_kill
 				get_tree().call_deferred("reload_current_scene")
 
+#Handle state changes
 func state_change(state: State):
 	match current_state:
 		State.Dodging:
@@ -142,7 +157,7 @@ func state_change(state: State):
 			player_hurt_box.monitoring=true
 			player_hurt_box.set_collision_layer_value(5,true)
 		State.Attacking:
-			pass
+			attack_timer.start()
 		State.Base:
 			pass
 	
@@ -154,11 +169,15 @@ func state_change(state: State):
 			player_hurt_box.monitoring=false
 			player_hurt_box.set_collision_layer_value(5,false)
 			player_animated_sprite_2d.play("TaklaSağ" if is_right else "TaklaSol")
+			var dodge_dir = 1 if is_right else -1
+			velocity.x =DODGE_VELOCITY*dodge_dir
 		State.Attacking:
-			is_touched_floor_after_attack=false
-			weapon.on_attack()
+			can_attack=false
 			var mouse_pos=get_global_mouse_position()
 			var pos=global_position
+			velocity =(mouse_pos-pos).normalized()*ATTACK_VELOCITY
+			is_touched_floor_after_attack=false
+			weapon.on_attack()
 			if mouse_pos.x>pos.x:
 				player_animated_sprite_2d.play("DefaultSağ")
 				is_right=true
@@ -172,10 +191,15 @@ func state_change(state: State):
 				player_animated_sprite_2d.play("DefaultSol")
 
 
-
 func _on_player_animated_sprite_2d_animation_finished() -> void:
 	if "Takla" in player_animated_sprite_2d.animation:
 		state_change(State.Base)
 
 func _on_player_hurt_box_was_hit() -> void:
 	kill()
+
+func _on_weapon_attack_finished() -> void:
+	state_change(State.Base)
+
+func _on_attack_timer_timeout() -> void:
+	can_attack=true

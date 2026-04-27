@@ -1,14 +1,12 @@
 extends Node2D
 @onready var weapon_animated_sprite_2d: AnimatedSprite2D = $WeaponAnimatedSprite2D
 @onready var weapon_area_2d: Area2D = $Area2D
-@onready var timer: Timer = $Timer
 @onready var player: CharacterBody2D = $".."
 @onready var audio_stream_player_2d: AudioStreamPlayer2D = $AudioStreamPlayer2D
 
-
+signal attack_finished
 
 func on_attack():
-	timer.start()
 	look_at(get_global_mouse_position())
 	weapon_animated_sprite_2d.visible=true
 	weapon_area_2d.monitoring=true
@@ -21,7 +19,4 @@ func _on_weapon_animated_sprite_2d_animation_finished() -> void:
 		weapon_animated_sprite_2d.visible=false
 		weapon_area_2d.monitoring=false
 		weapon_area_2d.monitorable=false
-
-
-func _on_timer_timeout() -> void:
-	owner.state_change(Player.State.Base)
+		attack_finished.emit()

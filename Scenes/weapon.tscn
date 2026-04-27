@@ -19,13 +19,13 @@ region = Rect2(1024, 512, 256, 256)
 [sub_resource type="SpriteFrames" id="SpriteFrames_7244r"]
 animations = [{
 "frames": [{
-"duration": 0.5,
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_0t63y")
 }, {
-"duration": 1.0,
+"duration": 1.5,
 "texture": SubResource("AtlasTexture_fhqo3")
 }, {
-"duration": 0.5,
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_d2dnl")
 }],
 "loop": false,
@@ -56,14 +56,9 @@ monitorable = false
 position = Vector2(72.75, -9.5)
 shape = SubResource("RectangleShape2D_2oqxf")
 
-[node name="Timer" type="Timer" parent="."]
-wait_time = 0.35
-one_shot = true
-
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 position = Vector2(154, 1)
 stream = ExtResource("3_500k2")
 
 [connection signal="animation_finished" from="WeaponAnimatedSprite2D" to="." method="_on_weapon_animated_sprite_2d_animation_finished"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

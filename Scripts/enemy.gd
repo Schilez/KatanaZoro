@@ -1,5 +1,6 @@
 extends CharacterBody2D
 
+#Referacnes
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var player: Player = %Player
 @onready var pivot_point: Node2D = $PivotPoint
@@ -11,18 +12,17 @@ extends CharacterBody2D
 @onready var bullet_point_right: Node2D = $bullet_point_right
 @onready var stun_timer: Timer = $stun_timer
 
-
-
-
+#Instantiate scene
 const projectile_scene = preload("res://Scenes/projectiles.tscn")
 
+#Movment
 const Patrol_SPEED = 300.0
 var Chase_SPEED=600
 
 @export var is_gunman:= false
 
+#State Machine
 enum State {Patrol, Chase, Stand, Stunned, Shooting}
-
 @export var current_state:= State.Stand
 
 var direction := -1
@@ -33,6 +33,7 @@ var can_see_player := false
 var is_in_range := false
 var gun_point
 var can_shoot:= true
+var agressive := false
 
 func _ready() -> void:
 	if is_gunman:
@@ -46,6 +47,8 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	
+	#Handle gravity
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 	
@@ -54,36 +57,23 @@ func _physics_process(delta: float) -> void:
 	if is_in_range:
 		can_see_player= check_line_of_sight()
 	
+	
+	
 	match current_state:
 		State.Patrol:
 			handle_patrol()
 		State.Chase:
-			handle_chase()
+			handle_chase(delta)
 		State.Stand:
 			handle_stand()
 		State.Shooting:
 			handle_shooting()
 		State.Stunned:
 			handle_stun()
+			return
 	
-	if is_in_range and can_see_player and current_state!= State.Chase and current_state!=State.Stunned:
-		if not is_gunman:
-			current_state=State.Chase
-			animated_sprite_2d.play("NormalChase")
-		elif is_gunman:
-			current_state= State.Shooting
-			animated_sprite_2d.play("GunManChase")
-		
-	elif current_state!=State.Patrol and !is_in_range or !can_see_player:
-		if current_state!=State.Stand and current_state != State.Stunned:
-			current_state=State.Patrol
-			if not is_gunman:
-				animated_sprite_2d.play("Normal")
-			elif is_gunman:
-				animated_sprite_2d.play("GunMan")
-
-
-
+	handle_states()
+	
 	move_and_slide()
 
 func handle_patrol():
@@ -93,21 +83,20 @@ func handle_patrol():
 	if ray_cast_right.is_colliding():
 		direction = -1
 
-func handle_chase():
+func handle_chase(delta: float):
 	if player:
 		if player.global_position.x< global_position.x:
 			direction=-1
 		elif player.global_position.x > global_position.x:
 			direction= 1
-
-	velocity.x = move_toward(velocity.x,Chase_SPEED*direction,20)
+	velocity.x = move_toward(velocity.x,Chase_SPEED*direction,1200*delta)
 
 func handle_flip():
 	animated_sprite_2d.flip_h= (direction== -1)
 	pivot_point.rotation_degrees=180 if direction==-1 else 0
 
 func handle_stand():
-	velocity= Vector2.ZERO
+	pass
 
 func handle_shooting():
 	if player:
@@ -116,14 +105,62 @@ func handle_shooting():
 		elif player.global_position.x > global_position.x:
 			direction= 1
 	
-	velocity= Vector2.ZERO
 	if can_shoot:
 		shoot()
 		can_shoot=false
 		shoot_timer.start()
 
 func handle_stun():
-	velocity=Vector2.ZERO
+	pass
+
+func change_state(state: State):
+	match current_state:
+		State.Patrol:
+			pass
+		State.Chase:
+			agressive=false
+		State.Stand:
+			pass
+		State.Stunned:
+			if is_gunman:
+				animated_sprite_2d.play("GunMan")
+			else:
+				animated_sprite_2d.play("Normal")
+		State.Shooting:
+			agressive=false
+	
+	current_state=state
+	
+	match current_state:
+		State.Patrol:
+			if is_gunman:
+				animated_sprite_2d.play("GunMan")
+			else:
+				animated_sprite_2d.play("Normal")
+		State.Chase:
+			agressive =true
+			animated_sprite_2d.play("NormalChase")
+		State.Stand:
+			velocity= Vector2.ZERO
+		State.Stunned:
+			velocity=Vector2.ZERO
+			animated_sprite_2d.play("Stunned")
+			stun_timer.start()
+		State.Shooting:
+			agressive=true
+			velocity= Vector2.ZERO
+			animated_sprite_2d.play("GunManChase")
+
+func handle_states():
+	
+	if  can_see_player and not agressive:
+		if is_gunman:
+			change_state(State.Shooting)
+		else:
+			change_state(State.Chase)
+	
+	elif not can_see_player and agressive:
+		change_state(State.Patrol)
 
 
 func _on_detection_area_2d_body_entered(body: Node2D) -> void:
@@ -134,6 +171,7 @@ func _on_detection_area_2d_body_entered(body: Node2D) -> void:
 func _on_detection_area_2d_body_exited(body: Node2D) -> void:
 	if  body==player:
 		is_in_range=false
+		can_see_player=false
 
 func check_line_of_sight()-> bool:
 	if player:
@@ -156,33 +194,18 @@ func shoot():
 	projectile.launch(dir_to_player,"Bullet")
 
 func apply_stun():
-	current_state=State.Stunned
-	animated_sprite_2d.play("Stunned")
-	stun_timer.start()
+	change_state(State.Stunned)
 
 func kill():
 	GameManager.add_kill()
 	queue_free()
-	
-	visible=false
-	
-	collision_layer=0
-	collision_mask=0
-	
-	set_physics_process(false)
-	set_process(false)
 
 func _on_shoot_timer_timeout() -> void:
 	can_shoot=true
 
 
 func _on_stun_timer_timeout() -> void:
-	current_state=State.Stand
-	if is_gunman:
-		animated_sprite_2d.play("GunMan")
-	else:
-		animated_sprite_2d.play("Normal")
-
+	change_state(State.Stand)
 
 
 func _on_hurt_box_area_entered(_area: Area2D) -> void:

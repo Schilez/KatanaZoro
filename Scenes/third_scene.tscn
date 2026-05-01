@@ -178,7 +178,7 @@ is_right = false
 [node name="Enemy4" parent="Node" instance=ExtResource("4_o3t46")]
 z_index = 1
 position = Vector2(982, -640)
-is_gunman = true
+type = 1
 
 [node name="Enemy8" parent="Node" instance=ExtResource("4_o3t46")]
 z_index = 1
@@ -189,7 +189,7 @@ is_right = false
 [node name="Enemy9" parent="Node" instance=ExtResource("4_o3t46")]
 z_index = 1
 position = Vector2(-463, -640)
-is_gunman = true
+type = 1
 
 [node name="Enemy5" parent="Node" instance=ExtResource("4_o3t46")]
 z_index = 1
@@ -205,11 +205,11 @@ is_right = false
 [node name="Enemy7" parent="Node" instance=ExtResource("4_o3t46")]
 z_index = 1
 position = Vector2(4815, -640)
-is_gunman = true
+type = 1
 is_right = false
 
 [node name="Enemy3" parent="Node" instance=ExtResource("4_o3t46")]
 z_index = 1
 position = Vector2(1172, 128)
-is_gunman = true
 current_state = 0
+type = 1

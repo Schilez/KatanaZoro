@@ -32,6 +32,8 @@ const DODGE_FRICTION := 600
 #Attack movment variables
 const ATTACK_VELOCITY := 1000
 const ATTACK_FRICTION := 2000
+#Kill slow
+const kill_slow:=0.85
 
 #Gravity variables
 var base_gravity:=1.5
@@ -189,6 +191,9 @@ func state_change(state: State):
 				player_animated_sprite_2d.play("DefaultSağ")
 			else:
 				player_animated_sprite_2d.play("DefaultSol")
+
+func stop():
+	velocity=velocity*kill_slow
 
 
 func _on_player_animated_sprite_2d_animation_finished() -> void:

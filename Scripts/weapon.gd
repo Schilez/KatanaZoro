@@ -20,3 +20,10 @@ func _on_weapon_animated_sprite_2d_animation_finished() -> void:
 		weapon_area_2d.monitoring=false
 		weapon_area_2d.monitorable=false
 		attack_finished.emit()
+
+
+
+
+func _on_area_2d_area_entered(area: Area2D) -> void:
+	area.hit()
+	player.stop()

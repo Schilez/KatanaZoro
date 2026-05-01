@@ -96,7 +96,7 @@ position = Vector2(1723, 383)
 [node name="Enemy3" parent="." instance=ExtResource("3_ool6r")]
 z_index = 1
 position = Vector2(2748, 384)
-is_gunman = true
+type = 1
 is_right = false
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]

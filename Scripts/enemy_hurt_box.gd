@@ -2,12 +2,12 @@ extends Area2D
 
 @onready var parent: Node2D=$".."
 
+var is_dead:= false
+
+signal was_hit
+
 func hit():
-	kill()
-
-func kill():
-	GameManager.add_kill()
-	parent.queue_free()
-
-func _on_area_entered(_area: Area2D) -> void:
-	kill()
+	if is_dead: return
+	is_dead=true
+	was_hit.emit()
+	queue_free()

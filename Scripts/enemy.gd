@@ -11,6 +11,8 @@ extends CharacterBody2D
 @onready var bullet_point_left: Node2D = $bullet_point_left
 @onready var bullet_point_right: Node2D = $bullet_point_right
 @onready var stun_timer: Timer = $stun_timer
+@onready var enemy_hurt_box: Area2D = $EnemyHurtBox
+
 
 #Instantiate scene
 const projectile_scene = preload("res://Scenes/projectiles.tscn")
@@ -19,11 +21,16 @@ const projectile_scene = preload("res://Scenes/projectiles.tscn")
 const Patrol_SPEED = 300.0
 var Chase_SPEED=600
 
-@export var is_gunman:= false
-
 #State Machine
 enum State {Patrol, Chase, Stand, Stunned, Shooting}
 @export var current_state:= State.Stand
+
+#Enemy Types
+enum Types {Normal,GunMan}
+@export var type:= Types.Normal
+
+var base_attack_state: State
+var base_animation: String
 
 var direction := -1
 
@@ -33,13 +40,18 @@ var can_see_player := false
 var is_in_range := false
 var gun_point
 var can_shoot:= true
-var agressive := false
 
 func _ready() -> void:
-	if is_gunman:
-		animated_sprite_2d.play("GunMan")
-	else:
-		animated_sprite_2d.play("Normal")
+	
+	match type:
+		Types.Normal:
+			base_attack_state=State.Chase
+			base_animation="Normal"
+		Types.GunMan:
+			base_attack_state=State.Shooting
+			base_animation="GunMan"
+	
+	animated_sprite_2d.play(base_animation)
 	
 	if is_right:
 		direction = 1
@@ -57,7 +69,7 @@ func _physics_process(delta: float) -> void:
 	if is_in_range:
 		can_see_player= check_line_of_sight()
 	
-	
+	think()
 	
 	match current_state:
 		State.Patrol:
@@ -65,14 +77,11 @@ func _physics_process(delta: float) -> void:
 		State.Chase:
 			handle_chase(delta)
 		State.Stand:
-			handle_stand()
+			pass
 		State.Shooting:
 			handle_shooting()
 		State.Stunned:
-			handle_stun()
-			return
-	
-	handle_states()
+			pass
 	
 	move_and_slide()
 
@@ -84,103 +93,91 @@ func handle_patrol():
 		direction = -1
 
 func handle_chase(delta: float):
-	if player:
-		if player.global_position.x< global_position.x:
-			direction=-1
-		elif player.global_position.x > global_position.x:
-			direction= 1
-	velocity.x = move_toward(velocity.x,Chase_SPEED*direction,1200*delta)
+	update_direction_to_player()
+	velocity.x = move_toward(velocity.x,Chase_SPEED*direction,800*delta)
+
+
 
 func handle_flip():
 	animated_sprite_2d.flip_h= (direction== -1)
 	pivot_point.rotation_degrees=180 if direction==-1 else 0
 
-func handle_stand():
-	pass
-
 func handle_shooting():
-	if player:
-		if player.global_position.x< global_position.x:
-			direction=-1
-		elif player.global_position.x > global_position.x:
-			direction= 1
-	
+	update_direction_to_player()
 	if can_shoot:
 		shoot()
 		can_shoot=false
 		shoot_timer.start()
-
-func handle_stun():
-	pass
 
 func change_state(state: State):
 	match current_state:
 		State.Patrol:
 			pass
 		State.Chase:
-			agressive=false
+			pass
 		State.Stand:
 			pass
 		State.Stunned:
-			if is_gunman:
-				animated_sprite_2d.play("GunMan")
-			else:
-				animated_sprite_2d.play("Normal")
+			animated_sprite_2d.play(base_animation)
 		State.Shooting:
-			agressive=false
+			pass
 	
 	current_state=state
 	
 	match current_state:
 		State.Patrol:
-			if is_gunman:
-				animated_sprite_2d.play("GunMan")
-			else:
-				animated_sprite_2d.play("Normal")
+			animated_sprite_2d.play(base_animation)
 		State.Chase:
-			agressive =true
 			animated_sprite_2d.play("NormalChase")
 		State.Stand:
 			velocity= Vector2.ZERO
+			animated_sprite_2d.play(base_animation)
 		State.Stunned:
 			velocity=Vector2.ZERO
 			animated_sprite_2d.play("Stunned")
 			stun_timer.start()
 		State.Shooting:
-			agressive=true
 			velocity= Vector2.ZERO
 			animated_sprite_2d.play("GunManChase")
 
-func handle_states():
-	
-	if  can_see_player and not agressive:
-		if is_gunman:
-			change_state(State.Shooting)
+func think():
+	if not current_state==State.Stunned:
+		
+		if can_see_player:
+			if not current_state==base_attack_state:
+				change_state(base_attack_state)
+		
 		else:
-			change_state(State.Chase)
-	
-	elif not can_see_player and agressive:
-		change_state(State.Patrol)
+			if current_state==base_attack_state:
+				change_state(State.Patrol)
+
+func update_direction_to_player():
+	if player:
+		direction= sign(player.global_position.x-global_position.x)
+
 
 
 func _on_detection_area_2d_body_entered(body: Node2D) -> void:
 	if body==player:
 		is_in_range=true
-
+		sight_ray.enabled=true
 
 func _on_detection_area_2d_body_exited(body: Node2D) -> void:
-	if  body==player:
+	if body==player:
 		is_in_range=false
 		can_see_player=false
+		sight_ray.enabled=false
+		sight_ray.target_position=Vector2.ZERO
 
 func check_line_of_sight()-> bool:
-	if player:
-		sight_ray.target_position= to_local(player.global_position)
-		
-		if sight_ray.is_colliding():
-			var collider:= sight_ray.get_collider()
-			if collider==player:
-				return true
+	if not player or not sight_ray.enabled:
+		return false
+	sight_ray.target_position= to_local(player.global_position)
+	
+	if sight_ray.is_colliding():
+		var collider:= sight_ray.get_collider()
+		if collider==player:
+			return true
 	return false
 
 func shoot():
@@ -208,5 +205,5 @@ func _on_stun_timer_timeout() -> void:
 	change_state(State.Stand)
 
 
-func _on_hurt_box_area_entered(_area: Area2D) -> void:
+func _on_enemy_hurt_box_was_hit() -> void:
 	kill()

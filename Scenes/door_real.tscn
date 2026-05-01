@@ -53,7 +53,7 @@ shape = SubResource("RectangleShape2D_dbj2u")
 
 [node name="DoorHurtBox" type="Area2D" parent="."]
 collision_layer = 64
-collision_mask = 8
+collision_mask = 0
 script = ExtResource("3_xdh0h")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DoorHurtBox"]
@@ -62,5 +62,4 @@ shape = SubResource("RectangleShape2D_aeg4d")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
-[connection signal="area_entered" from="DoorHurtBox" to="DoorHurtBox" method="_on_area_entered"]
 [connection signal="was_hit" from="DoorHurtBox" to="." method="_on_door_hurt_box_was_hit"]

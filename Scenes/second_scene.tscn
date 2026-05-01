@@ -101,19 +101,18 @@ current_state = 0
 [node name="Enemy2" parent="." instance=ExtResource("2_ebyon")]
 z_index = 1
 position = Vector2(1379, 256)
-is_gunman = true
 
 [node name="Enemy3" parent="." instance=ExtResource("2_ebyon")]
 z_index = 1
 position = Vector2(3158, 256)
-is_gunman = true
 current_state = 0
+type = 1
 is_right = false
 
 [node name="Enemy4" parent="." instance=ExtResource("2_ebyon")]
 z_index = 1
 position = Vector2(4022, 256)
-is_gunman = true
+type = 1
 is_right = false
 
 [node name="TileMap" type="TileMap" parent="."]

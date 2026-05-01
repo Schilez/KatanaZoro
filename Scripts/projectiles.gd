@@ -7,13 +7,21 @@ extends Area2D
 var SPEED := 3000
 var direction := Vector2.ZERO
 var group := ""
+const move_tampon:=1.2
 
 func _physics_process(delta: float) -> void:
 	var move_vector:= direction*SPEED*delta
-	position += move_vector
-	ray_cast_2d.target_position=to_local(global_position+move_vector)
+	ray_cast_2d.target_position=to_local(global_position+move_vector*move_tampon)
+	ray_cast_2d.force_raycast_update()
 	
-	trigger()
+	if ray_cast_2d.is_colliding():
+		var body= ray_cast_2d.get_collider()
+		if body.has_method("hit"):
+			body.hit()
+		kill()
+	else:
+		position += move_vector
+
 
 
 func launch (target_dir: Vector2,source_group: String ):
@@ -28,13 +36,6 @@ func launch (target_dir: Vector2,source_group: String ):
 		ray_cast_2d.set_collision_mask_value(6,true)
 		ray_cast_2d.set_collision_mask_value(7,true)
 
-func trigger():
-	ray_cast_2d.force_raycast_update()
-	if ray_cast_2d.is_colliding():
-		var body= ray_cast_2d.get_collider()
-		if body.has_method("hit"):
-			body.hit()
-		kill()
 
 func kill():
 	visible=false

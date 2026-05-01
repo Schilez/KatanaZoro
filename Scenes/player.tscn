@@ -133,7 +133,7 @@ position = Vector2(-75, 18)
 position = Vector2(80, 17)
 
 [node name="attack_timer" type="Timer" parent="."]
-wait_time = 0.2
+wait_time = 0.1
 one_shot = true
 
 [connection signal="animation_finished" from="PlayerAnimatedSprite2D" to="." method="_on_player_animated_sprite_2d_animation_finished"]

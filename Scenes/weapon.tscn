@@ -48,7 +48,7 @@ animation = &"Attack"
 [node name="Area2D" type="Area2D" parent="."]
 position = Vector2(93, 0)
 collision_layer = 8
-collision_mask = 0
+collision_mask = 96
 monitoring = false
 monitorable = false
 
@@ -61,4 +61,4 @@ position = Vector2(154, 1)
 stream = ExtResource("3_500k2")
 
 [connection signal="animation_finished" from="WeaponAnimatedSprite2D" to="." method="_on_weapon_animated_sprite_2d_animation_finished"]
-[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

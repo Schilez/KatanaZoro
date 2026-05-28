@@ -3,8 +3,7 @@ extends Node2D
 const SECOND_SCENE = preload("res://Scenes/second_scene.tscn")
 @onready var tile_map: TileMap = $TileMap
 @onready var player: CharacterBody2D = %Player
-@onready var label: Label = $CanvasLayer/Label
-
+@onready var label: Label = %Label
 
 func _ready() -> void:
 	setup_camera_limits()

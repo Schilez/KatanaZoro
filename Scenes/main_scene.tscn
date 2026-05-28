@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://xn51mhoypxwl"]
+[gd_scene load_steps=16 format=3 uid="uid://xn51mhoypxwl"]
 
 [ext_resource type="Script" path="res://Scripts/main_scene.gd" id="1_bnlwu"]
 [ext_resource type="PackedScene" uid="uid://ipvegy7blen4" path="res://Scenes/player.tscn" id="1_q61hn"]
@@ -6,7 +6,10 @@
 [ext_resource type="PackedScene" uid="uid://bc2evivun28gm" path="res://Scenes/enemy.tscn" id="3_ool6r"]
 [ext_resource type="PackedScene" uid="uid://c1olhsijh7xdo" path="res://Scenes/next.tscn" id="4_6gdpp"]
 [ext_resource type="Texture2D" uid="uid://ddofurn0dfn34" path="res://Assets/Sprites/Sprite_Sheet_2.2.png" id="4_diud2"]
-[ext_resource type="Texture2D" uid="uid://c6ixv8tyqv8ry" path="res://Assets/Sprites/Sprite-Sheet-1.22.png" id="6_5s3tw"]
+[ext_resource type="Texture2D" uid="uid://qwcbvmefxx5e" path="res://Assets/UI_Materials/Textures/HUD1.png" id="6_f1u0j"]
+[ext_resource type="FontFile" uid="uid://cuevahfjh8qfy" path="res://Assets/UI_Materials/Fonts/Lucida Bright Regular.ttf" id="7_hr0wp"]
+[ext_resource type="Texture2D" uid="uid://dansnjmlmlmbc" path="res://Assets/UI_Materials/Textures/Writting.png" id="7_xacv2"]
+[ext_resource type="FontFile" uid="uid://ua4af1cl0qgi" path="res://Assets/UI_Materials/Fonts/fonnts.com-Krete-Book-.otf" id="8_pttmp"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_krqkc"]
 texture = ExtResource("2_xr1d8")
@@ -62,8 +65,10 @@ sources/0 = SubResource("TileSetAtlasSource_krqkc")
 sources/1 = SubResource("TileSetAtlasSource_dq7jf")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qiphs"]
-atlas = ExtResource("6_5s3tw")
-region = Rect2(1875.13, 1119.9, 86.3038, 82.1052)
+atlas = ExtResource("6_f1u0j")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l4nym"]
+atlas = ExtResource("7_xacv2")
 
 [node name="MainScene" type="Node2D"]
 script = ExtResource("1_bnlwu")
@@ -101,35 +106,68 @@ is_right = false
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Interaction" type="Label" parent="CanvasLayer" groups=["Interactions"]]
+[node name="HUD" type="MarginContainer" parent="CanvasLayer"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -960.0
+offset_right = 960.0
+offset_bottom = 1200.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/HUD"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_qiphs")
+
+[node name="Control" type="Control" parent="CanvasLayer/HUD"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/HUD/Control" groups=["Score"]]
+unique_name_in_owner = true
+layout_mode = 2
+offset_left = 144.0
+offset_top = 8.0
+offset_right = 205.0
+offset_bottom = 68.0
+theme_override_fonts/font = ExtResource("7_hr0wp")
+theme_override_font_sizes/font_size = 50
+text = "12
+"
+horizontal_alignment = 1
+
+[node name="Writing" type="MarginContainer" parent="CanvasLayer" groups=["Interactions"]]
 visible = false
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -90.5
-offset_right = 90.5
-offset_bottom = 23.0
+offset_left = -960.0
+offset_right = 960.0
+offset_bottom = 1200.0
 grow_horizontal = 2
-theme_override_colors/font_color = Color(0.870588, 0, 0, 1)
-theme_override_font_sizes/font_size = 60
-text = "Press \"E\" to Interact"
-horizontal_alignment = 1
+size_flags_horizontal = 4
 
-[node name="KuruKafa" type="MarginContainer" parent="CanvasLayer"]
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/KuruKafa"]
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Writing"]
 layout_mode = 2
-texture = SubResource("AtlasTexture_qiphs")
+texture = SubResource("AtlasTexture_l4nym")
 
-[node name="Label" type="Label" parent="CanvasLayer" groups=["Score"]]
-offset_left = 89.0
-offset_top = 13.0
-offset_right = 129.0
-offset_bottom = 68.0
+[node name="Control" type="Control" parent="CanvasLayer/Writing"]
+layout_mode = 2
+
+[node name="Interaction" type="Label" parent="CanvasLayer/Writing/Control"]
+unique_name_in_owner = true
+layout_mode = 2
+offset_left = 787.0
+offset_top = 87.0
+offset_right = 1133.0
+offset_bottom = 137.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.760784, 0.576471, 0.0196078, 1)
+theme_override_fonts/font = ExtResource("8_pttmp")
 theme_override_font_sizes/font_size = 40
-text = "0"
+text = "Press \"E\" to Interact"
 horizontal_alignment = 1
 
 [node name="Next" parent="." instance=ExtResource("4_6gdpp")]

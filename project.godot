@@ -21,6 +21,12 @@ config/icon="res://Assets/Sprites/Başlıksız-1.png"
 GameManager="*res://Scripts/Global.gd"
 SoundManager="*res://Scenes/real_theme_sound.tscn"
 
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1200
+window/stretch/mode="canvas_items"
+
 [global_group]
 
 Player=""

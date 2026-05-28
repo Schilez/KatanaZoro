@@ -1,0 +1,112 @@
+[gd_scene load_steps=10 format=3 uid="uid://cic4q8kx6kojq"]
+
+[ext_resource type="Texture2D" uid="uid://dmx1etu3iyhs2" path="res://Assets/UI_Materials/Textures/ChosenOne32.png" id="1_u44yf"]
+[ext_resource type="FontFile" uid="uid://ua4af1cl0qgi" path="res://Assets/UI_Materials/Fonts/fonnts.com-Krete-Book-.otf" id="2_6p7l2"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gkgh6"]
+texture = ExtResource("1_u44yf")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ecxad"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gyflg"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7lyuc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_m476g"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fx4uj"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xn04e"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Panel" type="Panel" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_gkgh6")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer"]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -285.0
+offset_top = 42.0
+offset_right = -89.0
+offset_bottom = 340.0
+grow_horizontal = 0
+grow_vertical = 2
+pivot_offset = Vector2(145.5, 164)
+theme_override_constants/separation = 15
+
+[node name="Button" type="Button" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_colors/font_color = Color(0.8, 0.615686, 0.298039, 1)
+theme_override_fonts/font = ExtResource("2_6p7l2")
+theme_override_font_sizes/font_size = 40
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ecxad")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_gyflg")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_7lyuc")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_m476g")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_fx4uj")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_xn04e")
+text = "Continue"
+alignment = 2
+
+[node name="Button2" type="Button" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_colors/font_color = Color(0.8, 0.615686, 0.298039, 1)
+theme_override_fonts/font = ExtResource("2_6p7l2")
+theme_override_font_sizes/font_size = 40
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ecxad")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_gyflg")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_7lyuc")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_m476g")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_fx4uj")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_xn04e")
+text = "New Game"
+alignment = 2
+
+[node name="Button3" type="Button" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_colors/font_color = Color(0.8, 0.615686, 0.298039, 1)
+theme_override_fonts/font = ExtResource("2_6p7l2")
+theme_override_font_sizes/font_size = 40
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ecxad")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_gyflg")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_7lyuc")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_m476g")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_fx4uj")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_xn04e")
+text = "Options"
+alignment = 2
+
+[node name="Button4" type="Button" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_colors/font_color = Color(0.8, 0.615686, 0.298039, 1)
+theme_override_fonts/font = ExtResource("2_6p7l2")
+theme_override_font_sizes/font_size = 40
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ecxad")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_gyflg")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_7lyuc")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_m476g")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_fx4uj")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_xn04e")
+text = "Exit"
+alignment = 2

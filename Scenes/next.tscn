@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://Scripts/next.gd" id="1_g8sgg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c0dh6"]
-size = Vector2(132, 46)
+size = Vector2(200, 81)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4510w"]
 atlas = ExtResource("1_ecd5s")
@@ -27,7 +27,7 @@ monitoring = false
 script = ExtResource("1_g8sgg")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(12, 0)
+position = Vector2(13, -0.5)
 shape = SubResource("RectangleShape2D_c0dh6")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

@@ -3,4 +3,6 @@
 [ext_resource type="AudioStream" uid="uid://bwt7ykh70368q" path="res://Assets/Sounds/Katana Zero (Ost-Version).mp3" id="1_1rdsh"]
 
 [node name="RealThemeSound" type="AudioStreamPlayer"]
+process_mode = 3
 stream = ExtResource("1_1rdsh")
+volume_db = -20.0

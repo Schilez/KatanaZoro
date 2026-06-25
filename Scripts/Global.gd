@@ -15,3 +15,6 @@ func _process(_delta: float) -> void:
 
 func add_kill():
 	kill_count += 1
+
+func music_play():
+	SoundManager.playing = !SoundManager.playing

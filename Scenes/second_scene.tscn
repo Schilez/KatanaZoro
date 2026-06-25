@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://c766tald06o3t"]
+[gd_scene load_steps=35 format=3 uid="uid://c766tald06o3t"]
 
 [ext_resource type="PackedScene" uid="uid://ipvegy7blen4" path="res://Scenes/player.tscn" id="1_3r0pv"]
 [ext_resource type="Script" path="res://Scripts/second_scene.gd" id="1_yq24b"]
@@ -8,8 +8,12 @@
 [ext_resource type="PackedScene" uid="uid://43w4t20ldvb8" path="res://Scenes/door_real.tscn" id="5_2eonp"]
 [ext_resource type="PackedScene" uid="uid://sbgjwt7rym6i" path="res://Scenes/throwable.tscn" id="6_wh0vi"]
 [ext_resource type="Texture2D" uid="uid://x7vee0ouxdnq" path="res://Assets/Sprites/Sprite-Sheet-1.21.png" id="7_smfo2"]
-[ext_resource type="Texture2D" uid="uid://c6ixv8tyqv8ry" path="res://Assets/Sprites/Sprite-Sheet-1.22.png" id="9_22c7r"]
 [ext_resource type="PackedScene" uid="uid://c1olhsijh7xdo" path="res://Scenes/next.tscn" id="9_rwq5q"]
+[ext_resource type="Texture2D" uid="uid://qwcbvmefxx5e" path="res://Assets/UI_Materials/Textures/HUD1.png" id="9_v7bk4"]
+[ext_resource type="FontFile" uid="uid://cuevahfjh8qfy" path="res://Assets/UI_Materials/Fonts/Lucida Bright Regular.ttf" id="10_6p6ch"]
+[ext_resource type="Texture2D" uid="uid://dansnjmlmlmbc" path="res://Assets/UI_Materials/Textures/Writting.png" id="11_t2dj1"]
+[ext_resource type="FontFile" uid="uid://ua4af1cl0qgi" path="res://Assets/UI_Materials/Fonts/fonnts.com-Krete-Book-.otf" id="12_8vvnb"]
+[ext_resource type="Texture2D" uid="uid://3p5iel1f5psn" path="res://Assets/UI_Materials/Textures/PauseMenu.png" id="14_pavks"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_78k30"]
 texture = ExtResource("2_0x4iu")
@@ -75,16 +79,45 @@ physics_layer_0/collision_mask = 255
 sources/2 = SubResource("TileSetAtlasSource_0ucf0")
 sources/1 = SubResource("TileSetAtlasSource_78k30")
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_lvbfn"]
-atlas = ExtResource("7_smfo2")
-region = Rect2(1881.95, 676.81, 82.28, 111.32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_r43wm"]
-atlas = ExtResource("9_22c7r")
-region = Rect2(1875.13, 1119.9, 86.3038, 82.1052)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b1uye"]
 size = Vector2(94, 385)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fvv3t"]
+atlas = ExtResource("9_v7bk4")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e5msi"]
+atlas = ExtResource("11_t2dj1")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8gvq1"]
+atlas = ExtResource("7_smfo2")
+region = Rect2(1872, 666, 97.0001, 115)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_arlil"]
+texture = ExtResource("14_pavks")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rr8di"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_30odk"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nm4lv"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vvhx3"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0vi6i"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_um76y"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hdqhg"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5njkt"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_b7kb4"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kl54f"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_d2ugm"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xodb3"]
 
 [node name="second_scene" type="Node2D"]
 script = ExtResource("1_yq24b")
@@ -134,52 +167,6 @@ position = Vector2(1218, 256)
 z_index = -1
 position = Vector2(-669, 256)
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="Interaction" type="Label" parent="CanvasLayer" groups=["Interactions"]]
-visible = false
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -461.0
-offset_right = 461.0
-offset_bottom = 83.0
-grow_horizontal = 2
-theme_override_colors/font_color = Color(0.921569, 0, 0, 1)
-theme_override_font_sizes/font_size = 60
-text = "Press \"E\" to Interact"
-horizontal_alignment = 1
-
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
-visible = false
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -82.0
-offset_bottom = 111.0
-grow_horizontal = 0
-
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/MarginContainer"]
-layout_mode = 2
-texture = SubResource("AtlasTexture_lvbfn")
-
-[node name="KuruKafa" type="MarginContainer" parent="CanvasLayer"]
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/KuruKafa"]
-layout_mode = 2
-texture = SubResource("AtlasTexture_r43wm")
-
-[node name="Label" type="Label" parent="CanvasLayer" groups=["Score"]]
-offset_left = 89.0
-offset_top = 13.0
-offset_right = 129.0
-offset_bottom = 68.0
-theme_override_font_sizes/font_size = 40
-text = "0"
-horizontal_alignment = 1
-
 [node name="Next" parent="." instance=ExtResource("9_rwq5q")]
 z_index = -1
 position = Vector2(5325, -390)
@@ -192,3 +179,243 @@ collision_mask = 4
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2(-21, -26.5)
 shape = SubResource("RectangleShape2D_b1uye")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HUD" type="MarginContainer" parent="CanvasLayer"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -960.0
+offset_right = 960.0
+offset_bottom = 1200.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/HUD"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_fvv3t")
+
+[node name="Control" type="Control" parent="CanvasLayer/HUD"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/HUD/Control" groups=["Score"]]
+unique_name_in_owner = true
+layout_mode = 2
+offset_left = 144.0
+offset_top = 8.0
+offset_right = 205.0
+offset_bottom = 68.0
+theme_override_fonts/font = ExtResource("10_6p6ch")
+theme_override_font_sizes/font_size = 50
+text = "12
+"
+horizontal_alignment = 1
+
+[node name="Writing" type="MarginContainer" parent="CanvasLayer" groups=["Interactions"]]
+visible = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -960.0
+offset_right = 960.0
+offset_bottom = 1200.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Writing"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_e5msi")
+
+[node name="Control" type="Control" parent="CanvasLayer/Writing"]
+layout_mode = 2
+
+[node name="Interaction" type="Label" parent="CanvasLayer/Writing/Control"]
+unique_name_in_owner = true
+layout_mode = 2
+offset_left = 787.0
+offset_top = 87.0
+offset_right = 1133.0
+offset_bottom = 137.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.760784, 0.576471, 0.0196078, 1)
+theme_override_fonts/font = ExtResource("12_8vvnb")
+theme_override_font_sizes/font_size = 40
+text = "Press \"E\" to Interact"
+horizontal_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -146.0
+offset_top = -3.0
+offset_right = -49.0
+offset_bottom = 112.0
+grow_horizontal = 0
+scale = Vector2(0.68, 0.626207)
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/MarginContainer"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_8gvq1")
+
+[node name="Panel" type="Panel" parent="CanvasLayer"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer"]
+process_mode = 3
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -252.0
+offset_top = -224.5
+offset_right = 252.0
+offset_bottom = 224.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="CanvasLayer/MarginContainer2"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_arlil")
+
+[node name="PauseMenuButtons" type="VBoxContainer" parent="CanvasLayer/MarginContainer2/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 40
+
+[node name="Continue" type="Button" parent="CanvasLayer/MarginContainer2/Panel/PauseMenuButtons"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("12_8vvnb")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/focus = SubResource("StyleBoxEmpty_rr8di")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_30odk")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_nm4lv")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_vvhx3")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_0vi6i")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_um76y")
+text = "Continue"
+
+[node name="MainMenu" type="Button" parent="CanvasLayer/MarginContainer2/Panel/PauseMenuButtons"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("12_8vvnb")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/focus = SubResource("StyleBoxEmpty_rr8di")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_30odk")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_nm4lv")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_vvhx3")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_0vi6i")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_um76y")
+text = "Main Menu"
+
+[node name="Exit" type="Button" parent="CanvasLayer/MarginContainer2/Panel/PauseMenuButtons"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("12_8vvnb")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/focus = SubResource("StyleBoxEmpty_rr8di")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_30odk")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_nm4lv")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_vvhx3")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_0vi6i")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_um76y")
+text = "Exit"
+
+[node name="Exit text" type="Control" parent="CanvasLayer/MarginContainer2/Panel"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/MarginContainer2/Panel/Exit text"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -115.0
+offset_top = -41.0
+offset_right = 118.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("12_8vvnb")
+theme_override_font_sizes/font_size = 20
+text = "Are you realy want to exit?
+"
+horizontal_alignment = 1
+
+[node name="Yes" type="Button" parent="CanvasLayer/MarginContainer2/Panel/Exit text"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = 8.0
+offset_right = -27.0
+offset_bottom = 41.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("12_8vvnb")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/focus = SubResource("StyleBoxEmpty_hdqhg")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_5njkt")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_b7kb4")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_kl54f")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_d2ugm")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_xodb3")
+text = "Yes
+"
+
+[node name="No" type="Button" parent="CanvasLayer/MarginContainer2/Panel/Exit text"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 32.0
+offset_top = 8.0
+offset_right = 67.0
+offset_bottom = 41.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("12_8vvnb")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/focus = SubResource("StyleBoxEmpty_hdqhg")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_5njkt")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_b7kb4")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_kl54f")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_d2ugm")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_xodb3")
+text = "No"

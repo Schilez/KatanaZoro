@@ -1,8 +1,10 @@
-[gd_scene load_steps=16 format=3 uid="uid://xn51mhoypxwl"]
+[gd_scene load_steps=33 format=3 uid="uid://xn51mhoypxwl"]
 
 [ext_resource type="Script" path="res://Scripts/main_scene.gd" id="1_bnlwu"]
 [ext_resource type="PackedScene" uid="uid://ipvegy7blen4" path="res://Scenes/player.tscn" id="1_q61hn"]
+[ext_resource type="Texture2D" uid="uid://bau4m0ndjvtre" path="res://Assets/UI_Materials/Textures/cross.png" id="2_b3pqs"]
 [ext_resource type="Texture2D" uid="uid://on6t3aklnlc3" path="res://Assets/Sprites/Sprite_Sheet_2.1.png" id="2_xr1d8"]
+[ext_resource type="Texture2D" uid="uid://bpp8x2v7ussjj" path="res://Assets/UI_Materials/Textures/Başlıksız-2.png" id="3_ckr2c"]
 [ext_resource type="PackedScene" uid="uid://bc2evivun28gm" path="res://Scenes/enemy.tscn" id="3_ool6r"]
 [ext_resource type="PackedScene" uid="uid://c1olhsijh7xdo" path="res://Scenes/next.tscn" id="4_6gdpp"]
 [ext_resource type="Texture2D" uid="uid://ddofurn0dfn34" path="res://Assets/Sprites/Sprite_Sheet_2.2.png" id="4_diud2"]
@@ -10,6 +12,8 @@
 [ext_resource type="FontFile" uid="uid://cuevahfjh8qfy" path="res://Assets/UI_Materials/Fonts/Lucida Bright Regular.ttf" id="7_hr0wp"]
 [ext_resource type="Texture2D" uid="uid://dansnjmlmlmbc" path="res://Assets/UI_Materials/Textures/Writting.png" id="7_xacv2"]
 [ext_resource type="FontFile" uid="uid://ua4af1cl0qgi" path="res://Assets/UI_Materials/Fonts/fonnts.com-Krete-Book-.otf" id="8_pttmp"]
+[ext_resource type="Texture2D" uid="uid://3p5iel1f5psn" path="res://Assets/UI_Materials/Textures/PauseMenu.png" id="11_i8vt7"]
+[ext_resource type="AudioStream" uid="uid://m0cx18oy5jin" path="res://Assets/Sounds/click.mp3" id="14_weqld"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_krqkc"]
 texture = ExtResource("2_xr1d8")
@@ -70,8 +74,37 @@ atlas = ExtResource("6_f1u0j")
 [sub_resource type="AtlasTexture" id="AtlasTexture_l4nym"]
 atlas = ExtResource("7_xacv2")
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ctnia"]
+texture = ExtResource("11_i8vt7")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cl27h"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2rm4y"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_smm5r"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_15131"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_r2e8v"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_osad0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pwkgy"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_357en"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pitgw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_itu8g"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_x03ru"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gc3ii"]
+
 [node name="MainScene" type="Node2D"]
 script = ExtResource("1_bnlwu")
+cross_1 = ExtResource("2_b3pqs")
+cross_2 = ExtResource("3_ckr2c")
 
 [node name="Player" parent="." instance=ExtResource("1_q61hn")]
 unique_name_in_owner = true
@@ -138,13 +171,17 @@ horizontal_alignment = 1
 
 [node name="Writing" type="MarginContainer" parent="CanvasLayer" groups=["Interactions"]]
 visible = false
-anchors_preset = 5
+anchors_preset = 8
 anchor_left = 0.5
+anchor_top = 0.5
 anchor_right = 0.5
+anchor_bottom = 0.5
 offset_left = -960.0
+offset_top = -600.0
 offset_right = 960.0
-offset_bottom = 1200.0
+offset_bottom = 600.0
 grow_horizontal = 2
+grow_vertical = 2
 size_flags_horizontal = 4
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/Writing"]
@@ -170,7 +207,175 @@ theme_override_font_sizes/font_size = 40
 text = "Press \"E\" to Interact"
 horizontal_alignment = 1
 
+[node name="Panel" type="Panel" parent="CanvasLayer"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
+process_mode = 3
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -252.0
+offset_top = -224.5
+offset_right = 252.0
+offset_bottom = 224.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="CanvasLayer/MarginContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_ctnia")
+
+[node name="PauseMenuButtons" type="VBoxContainer" parent="CanvasLayer/MarginContainer/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 40
+
+[node name="Continue" type="Button" parent="CanvasLayer/MarginContainer/Panel/PauseMenuButtons"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("8_pttmp")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/focus = SubResource("StyleBoxEmpty_cl27h")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_2rm4y")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_smm5r")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_15131")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_r2e8v")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_osad0")
+text = "Continue"
+
+[node name="MainMenu" type="Button" parent="CanvasLayer/MarginContainer/Panel/PauseMenuButtons"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("8_pttmp")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/focus = SubResource("StyleBoxEmpty_cl27h")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_2rm4y")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_smm5r")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_15131")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_r2e8v")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_osad0")
+text = "Main Menu"
+
+[node name="Exit" type="Button" parent="CanvasLayer/MarginContainer/Panel/PauseMenuButtons"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("8_pttmp")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/focus = SubResource("StyleBoxEmpty_cl27h")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_2rm4y")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_smm5r")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_15131")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_r2e8v")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_osad0")
+text = "Exit"
+
+[node name="Exit text" type="Control" parent="CanvasLayer/MarginContainer/Panel"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/MarginContainer/Panel/Exit text"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -115.0
+offset_top = -41.0
+offset_right = 118.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("8_pttmp")
+theme_override_font_sizes/font_size = 20
+text = "Are you realy want to exit?
+"
+horizontal_alignment = 1
+
+[node name="Yes" type="Button" parent="CanvasLayer/MarginContainer/Panel/Exit text"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = 8.0
+offset_right = -27.0
+offset_bottom = 41.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("8_pttmp")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/focus = SubResource("StyleBoxEmpty_pwkgy")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_357en")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_pitgw")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_itu8g")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_x03ru")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_gc3ii")
+text = "Yes
+"
+
+[node name="No" type="Button" parent="CanvasLayer/MarginContainer/Panel/Exit text"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 32.0
+offset_top = 8.0
+offset_right = 67.0
+offset_bottom = 41.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("8_pttmp")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/focus = SubResource("StyleBoxEmpty_pwkgy")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_357en")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_pitgw")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_itu8g")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_x03ru")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_gc3ii")
+text = "No"
+
 [node name="Next" parent="." instance=ExtResource("4_6gdpp")]
 z_index = -1
 position = Vector2(3026, 375)
 rotation = -1.58587
+
+[node name="click" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("14_weqld")
+
+[connection signal="pressed" from="CanvasLayer/MarginContainer/Panel/PauseMenuButtons/Continue" to="." method="_on_continue_pressed"]
+[connection signal="pressed" from="CanvasLayer/MarginContainer/Panel/PauseMenuButtons/MainMenu" to="." method="_on_main_menu_pressed"]
+[connection signal="pressed" from="CanvasLayer/MarginContainer/Panel/PauseMenuButtons/Exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="CanvasLayer/MarginContainer/Panel/Exit text/No" to="." method="_on_no_pressed"]

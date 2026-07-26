@@ -13,7 +13,8 @@ func _process(_delta: float) -> void:
 	if can_interact and Input.is_action_just_pressed("Interaction"):
 		if is_inside_tree():
 			GameManager.start_kill= GameManager.kill_count
-			get_tree().change_scene_to_packed(next_level)
+			GameManager.save()
+			GameManager.load()
 
 func awake(level: PackedScene):
 	animated_sprite_2d.visible=true

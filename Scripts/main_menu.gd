@@ -46,7 +46,7 @@ func change_cross(cross:Texture2D):
 
 func _on_continue_pressed() -> void:
 	click.play()
-	get_tree().change_scene_to_packed(MAIN_SCENE)
+	GameManager.load()
 
 
 

@@ -43,6 +43,7 @@ func _process(_delta: float) -> void:
 	
 	if get_tree().get_nodes_in_group("Enemies").size()==0:
 		next.awake(END)
+
 	label.text= str(GameManager.kill_count)
 
 func setup_camera_limits():

@@ -69,25 +69,6 @@ layer_3/tile_data = PackedInt32Array(-1179668, 655360, 0, -1114132, 655360, 0, -
 unique_name_in_owner = true
 position = Vector2(-60, 123)
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="Label" type="Label" parent="CanvasLayer"]
-visible = false
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -33.0
-offset_top = -11.5
-offset_right = 33.0
-offset_bottom = 11.5
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 100
-text = "The END"
-horizontal_alignment = 1
-
 [node name="finish" parent="." instance=ExtResource("3_dfpwf")]
 position = Vector2(1504, -139)
 scale = Vector2(3.43748, 3.0727)
@@ -99,5 +80,8 @@ collision_layer = 4
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2(11.5, -15.5)
 shape = SubResource("RectangleShape2D_4froa")
+
+[node name="BulletContainer" type="Node2D" parent="."]
+unique_name_in_owner = true
 
 [connection signal="body_entered" from="finish" to="finish" method="_on_body_entered"]

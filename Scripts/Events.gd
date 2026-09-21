@@ -1,0 +1,7 @@
+extends Node
+
+signal interaction_on_signal
+signal interaction_off_signal
+signal have_throwable_signal
+signal havent_throwable_signal
+signal the_end_signal

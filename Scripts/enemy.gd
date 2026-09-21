@@ -11,7 +11,8 @@ extends CharacterBody2D
 @onready var bullet_point_left: Node2D = $bullet_point_left
 @onready var bullet_point_right: Node2D = $bullet_point_right
 @onready var stun_timer: Timer = $stun_timer
-@onready var enemy_hurt_box: Area2D = $EnemyHurtBox
+@onready var hurt_box: Area2D = $HurtBox
+@onready var bullet_container: Node2D = %BulletContainer
 
 
 #Instantiate scene
@@ -40,6 +41,7 @@ var can_see_player := false
 var is_in_range := false
 var gun_point
 var can_shoot:= true
+var is_dead:= false
 
 func _ready() -> void:
 	
@@ -55,8 +57,6 @@ func _ready() -> void:
 	
 	if is_right:
 		direction = 1
-
-
 
 func _physics_process(delta: float) -> void:
 	
@@ -95,8 +95,6 @@ func handle_patrol():
 func handle_chase(delta: float):
 	update_direction_to_player()
 	velocity.x = move_toward(velocity.x,Chase_SPEED*direction,800*delta)
-
-
 
 func handle_flip():
 	animated_sprite_2d.flip_h= (direction== -1)
@@ -155,7 +153,11 @@ func update_direction_to_player():
 	if player:
 		direction= sign(player.global_position.x-global_position.x)
 
-
+func hit():
+	if is_dead: return
+	is_dead=true
+	GameManager.add_score()
+	queue_free()
 
 func _on_detection_area_2d_body_entered(body: Node2D) -> void:
 	if body==player:
@@ -182,7 +184,7 @@ func check_line_of_sight()-> bool:
 
 func shoot():
 	var projectile= projectile_scene.instantiate()
-	get_tree().current_scene.add_child(projectile)
+	bullet_container.add_child(projectile)
 	
 	projectile.global_position=bullet_point_left.global_position if direction==-1 else bullet_point_right.global_position
 	
@@ -193,17 +195,11 @@ func shoot():
 func apply_stun():
 	change_state(State.Stunned)
 
-func kill():
-	GameManager.add_kill()
-	queue_free()
-
 func _on_shoot_timer_timeout() -> void:
 	can_shoot=true
-
 
 func _on_stun_timer_timeout() -> void:
 	change_state(State.Stand)
 
-
-func _on_enemy_hurt_box_was_hit() -> void:
-	kill()
+func _on_hurt_box_area_entered(area: Area2D) -> void:
+	area.hit()

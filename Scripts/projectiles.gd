@@ -2,8 +2,6 @@ extends Area2D
 
 @onready var ray_cast_2d: RayCast2D = $RayCast2D
 
-
-
 var SPEED := 3000
 var direction := Vector2.ZERO
 var group := ""

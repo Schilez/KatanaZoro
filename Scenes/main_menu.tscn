@@ -1,9 +1,8 @@
-[gd_scene load_steps=52 format=3 uid="uid://cic4q8kx6kojq"]
+[gd_scene load_steps=51 format=3 uid="uid://cic4q8kx6kojq"]
 
 [ext_resource type="Script" path="res://Scripts/main_menu.gd" id="1_1mgiu"]
 [ext_resource type="Texture2D" uid="uid://dmx1etu3iyhs2" path="res://Assets/UI_Materials/Textures/ChosenOne32.png" id="1_u44yf"]
 [ext_resource type="FontFile" uid="uid://ua4af1cl0qgi" path="res://Assets/UI_Materials/Fonts/fonnts.com-Krete-Book-.otf" id="2_6p7l2"]
-[ext_resource type="Texture2D" uid="uid://bpp8x2v7ussjj" path="res://Assets/UI_Materials/Textures/Başlıksız-2.png" id="2_ybx5q"]
 [ext_resource type="Texture2D" uid="uid://bjw47fa0b4ah" path="res://Assets/UI_Materials/Textures/grabber2.png" id="5_nr4j8"]
 [ext_resource type="Texture2D" uid="uid://dmyb2ipjfy05j" path="res://Assets/UI_Materials/Textures/grabber1.png" id="6_3sup4"]
 [ext_resource type="Texture2D" uid="uid://dpv7yenrv0wxs" path="res://Assets/UI_Materials/Textures/Sol1.png" id="7_qct1i"]
@@ -107,7 +106,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_1mgiu")
-cross_1 = ExtResource("2_ybx5q")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -166,6 +164,7 @@ text = "New Game"
 alignment = 2
 
 [node name="Options" type="Button" parent="CanvasLayer/Panel/MainButtons"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 8
 theme_override_colors/font_color = Color(0.8, 0.615686, 0.298039, 1)
@@ -487,4 +486,5 @@ stream = ExtResource("13_ntfs3")
 [connection signal="pressed" from="CanvasLayer/Panel/OptionButtons/Back/Back" to="." method="_on_back_pressed"]
 [connection signal="pressed" from="CanvasLayer/Panel/OptionButtons/Graphics/Left/Left" to="." method="_on_left_pressed"]
 [connection signal="pressed" from="CanvasLayer/Panel/OptionButtons/Graphics/Right/Right" to="." method="_on_right_pressed"]
+[connection signal="pressed" from="CanvasLayer/Panel/NewGame/Yes/yes" to="." method="_on_yes_pressed"]
 [connection signal="pressed" from="CanvasLayer/Panel/NewGame/No/no" to="." method="_on_no_pressed"]

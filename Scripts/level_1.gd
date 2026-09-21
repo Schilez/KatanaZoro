@@ -1,19 +1,20 @@
 extends Node2D
-@onready var player: Player = %Player
+@onready var next: Area2D = $Next
+@onready var tile_map: TileMap = $TileMap
+@onready var player: CharacterBody2D = %Player
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	setup_camera_limits()
 
-func the_end():
-	Events.the_end_signal.emit()
+func _process(_delta: float) -> void:
+	pass
 
 func setup_camera_limits():
 	# Oyuncunun içindeki kameraya ulaşıyoruz
 	var camera = player.get_node("Camera2D")
 	
 	# Limitleri hesaplayıp atıyoruz (Cell sayısı * Pixel boyutu)
-	camera.limit_left = -1400
-	camera.limit_right = 2600
+	camera.limit_left = -1300
+	camera.limit_right = 3800
 	camera.limit_top = -1000
-	camera.limit_bottom = 500
+	camera.limit_bottom = 700

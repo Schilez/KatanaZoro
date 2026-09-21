@@ -1,11 +1,10 @@
-[gd_scene load_steps=16 format=3 uid="uid://bc2evivun28gm"]
+[gd_scene load_steps=15 format=3 uid="uid://bc2evivun28gm"]
 
 [ext_resource type="Script" path="res://Scripts/enemy.gd" id="1_evbcw"]
 [ext_resource type="Texture2D" uid="uid://8yebhs5m60e6" path="res://Assets/Sprites/Sprite-Sheet-1.17.png" id="2_hytvp"]
 [ext_resource type="Texture2D" uid="uid://cciu7dbhdbepk" path="res://Assets/Sprites/Sprite-Sheet-1.13.png" id="2_wbqup"]
 [ext_resource type="Texture2D" uid="uid://bo83lala6ckb4" path="res://Assets/Sprites/Sprite-Sheet-1.15.png" id="3_yqe8s"]
 [ext_resource type="Texture2D" uid="uid://b6xy4yg55co65" path="res://Assets/Sprites/Sprite-Sheet-1.20.png" id="5_hlco1"]
-[ext_resource type="Script" path="res://Scripts/enemy_hurt_box.gd" id="6_4b0jy"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vtg7i"]
 atlas = ExtResource("2_hytvp")
@@ -76,11 +75,11 @@ size = Vector2(109, 191)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_01pl2"]
 size = Vector2(20, 28.1966)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_lp44i"]
-size = Vector2(109, 198)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ql3qx"]
+size = Vector2(108, 190)
 
 [node name="Enemy" type="CharacterBody2D" groups=["Enemies"]]
-collision_layer = 2
+collision_layer = 34
 collision_mask = 4
 script = ExtResource("1_evbcw")
 
@@ -135,17 +134,16 @@ position = Vector2(60, 30)
 wait_time = 2.0
 one_shot = true
 
-[node name="EnemyHurtBox" type="Area2D" parent="."]
-collision_layer = 32
-collision_mask = 8
-script = ExtResource("6_4b0jy")
+[node name="HurtBox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 16
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyHurtBox"]
-position = Vector2(-0.5, 29)
-shape = SubResource("RectangleShape2D_lp44i")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+position = Vector2(-1, 31)
+shape = SubResource("RectangleShape2D_ql3qx")
 
 [connection signal="body_entered" from="PivotPoint/DetectionArea2d" to="." method="_on_detection_area_2d_body_entered"]
 [connection signal="body_exited" from="PivotPoint/DetectionArea2d" to="." method="_on_detection_area_2d_body_exited"]
 [connection signal="timeout" from="shoot_timer" to="." method="_on_shoot_timer_timeout"]
 [connection signal="timeout" from="stun_timer" to="." method="_on_stun_timer_timeout"]
-[connection signal="was_hit" from="EnemyHurtBox" to="." method="_on_enemy_hurt_box_was_hit"]
+[connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]

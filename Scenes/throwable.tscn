@@ -1,10 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://sbgjwt7rym6i"]
+[gd_scene load_steps=5 format=3 uid="uid://sbgjwt7rym6i"]
 
-[ext_resource type="Script" path="res://Scripts/throwable.gd" id="1_1qoao"]
 [ext_resource type="Texture2D" uid="uid://x7vee0ouxdnq" path="res://Assets/Sprites/Sprite-Sheet-1.21.png" id="1_ne8wl"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sgcwk"]
-size = Vector2(119, 93)
+size = Vector2(51, 93)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i0mai"]
 atlas = ExtResource("1_ne8wl")
@@ -21,16 +20,14 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Throwable" type="Area2D"]
-collision_layer = 128
-script = ExtResource("1_1qoao")
+[node name="Throwable" type="Area2D" groups=["Throwable"]]
+collision_layer = 256
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0.5, 80.5)
+position = Vector2(1.5, -0.5)
 shape = SubResource("RectangleShape2D_sgcwk")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(1, -81)
 sprite_frames = SubResource("SpriteFrames_g1ny4")
-
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]
-[connection signal="body_exited" from="." to="." method="_on_body_exited"]

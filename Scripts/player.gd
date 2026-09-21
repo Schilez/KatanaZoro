@@ -9,6 +9,8 @@ class_name Player
 @onready var right_throw_point: Node2D = $right_throw_point
 @onready var player_hurt_box: Area2D = $PlayerHurtBox
 @onready var attack_timer: Timer = $attack_timer
+@onready var bullet_container: Node2D = %BulletContainer
+
 
 #Instantiate scenes
 const projectile_scene = preload("res://Scenes/projectiles.tscn")
@@ -40,17 +42,20 @@ var base_gravity:=1.5
 var dodge_gravity:=2.0
 var attack_gravity:= 4.0
 
-
 #Bools
 var is_right:=true
 var is_touched_floor_after_attack:= true
+var can_collect_throwable:= false
 var have_throwable:= false
 var can_attack := true
+var is_dead := false
 
 # State Machine
 enum State {Base, Dodging, Attacking}
 var current_state: State= State.Base
 
+#Level objects
+var throwable_area: Area2D
 
 func _physics_process(delta: float) -> void:
 	#Handle Camera
@@ -74,6 +79,12 @@ func _physics_process(delta: float) -> void:
 			handle_dodge_physics(delta)
 	
 	move_and_slide()
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("Interaction") and can_collect_throwable:
+		have_throwable = true
+		throwable_area.queue_free()
+		Events.have_throwable_signal.emit()
 
 #Base state physics
 func handle_base_physics(delta: float):
@@ -130,7 +141,7 @@ func update_animations(direction):
 #Handle throw
 func throw():
 	var throwable=projectile_scene.instantiate()
-	get_tree().current_scene.add_child(throwable)
+	bullet_container.add_child(throwable)
 	
 	var start_pos=right_throw_point.global_position if is_right else left_throw_point.global_position
 	throwable.global_position= start_pos
@@ -138,6 +149,7 @@ func throw():
 	var dir_to_throw:= (get_global_mouse_position()-start_pos).normalized()
 	throwable.launch(dir_to_throw,"Throwable")
 	have_throwable=false
+	Events.havent_throwable_signal.emit()
 
 #Handle camera
 func handle_camera_look_ahead(delta: float):
@@ -146,10 +158,8 @@ func handle_camera_look_ahead(delta: float):
 
 #Handle death
 func kill():
-	if not current_state==State.Dodging:
-			if is_inside_tree():
-				GameManager.kill_count=GameManager.start_kill
-				get_tree().call_deferred("reload_current_scene")
+	if not current_state==State.Dodging and not is_dead:
+		GameManager.restart()
 
 #Handle state changes
 func state_change(state: State):
@@ -195,7 +205,6 @@ func state_change(state: State):
 func stop():
 	velocity=velocity*kill_slow
 
-
 func _on_player_animated_sprite_2d_animation_finished() -> void:
 	if "Takla" in player_animated_sprite_2d.animation:
 		state_change(State.Base)
@@ -208,3 +217,15 @@ func _on_weapon_attack_finished() -> void:
 
 func _on_attack_timer_timeout() -> void:
 	can_attack=true
+
+func _on_interaction_box_area_entered(area: Area2D) -> void:
+	if area.is_in_group("Throwable") and not have_throwable:
+		Events.interaction_on_signal.emit()
+		can_collect_throwable = true
+		throwable_area = area
+
+func _on_interaction_box_area_exited(_area: Area2D) -> void:
+	if _area == throwable_area:
+		Events.interaction_off_signal.emit()
+		can_collect_throwable = false
+		throwable_area = null

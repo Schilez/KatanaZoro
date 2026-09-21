@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bau4m0ndjvtre"
-path="res://.godot/imported/cross.png-1dd438b88905af16ff3dc2e1d36c363c.ctex"
+path="res://.godot/imported/CURSOR_CROSSHAIR.png-d72853ce4e235efc93328ec4eb39a2ee.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/UI_Materials/Textures/cross.png"
-dest_files=["res://.godot/imported/cross.png-1dd438b88905af16ff3dc2e1d36c363c.ctex"]
+source_file="res://Assets/UI_Materials/Textures/CURSOR_CROSSHAIR.png"
+dest_files=["res://.godot/imported/CURSOR_CROSSHAIR.png-d72853ce4e235efc93328ec4eb39a2ee.ctex"]
 
 [params]
 

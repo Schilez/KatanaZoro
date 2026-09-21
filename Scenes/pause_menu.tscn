@@ -1,0 +1,207 @@
+[gd_scene load_steps=17 format=3 uid="uid://c7so6362nunnu"]
+
+[ext_resource type="Script" path="res://Scripts/pause_menu.gd" id="1_6jrnu"]
+[ext_resource type="Texture2D" uid="uid://3p5iel1f5psn" path="res://Assets/UI_Materials/Textures/PauseMenu.png" id="1_mpk0y"]
+[ext_resource type="FontFile" uid="uid://ua4af1cl0qgi" path="res://Assets/UI_Materials/Fonts/fonnts.com-Krete-Book-.otf" id="2_en03j"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2fvsi"]
+texture = ExtResource("1_mpk0y")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_y3tlf"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g7wum"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_djgqd"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ugdds"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_23aor"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rutu1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_t213c"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xpy7b"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_voauw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_r4j2l"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pts06"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xsgrj"]
+
+[node name="PauseMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6jrnu")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+process_mode = 3
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -252.0
+offset_top = -224.5
+offset_right = 252.0
+offset_bottom = 224.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="MarginContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_2fvsi")
+
+[node name="PauseMenuButtons" type="VBoxContainer" parent="MarginContainer/Panel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 40
+
+[node name="Continue" type="Button" parent="MarginContainer/Panel/PauseMenuButtons"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_en03j")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/focus = SubResource("StyleBoxEmpty_y3tlf")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_g7wum")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_djgqd")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_ugdds")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_23aor")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_rutu1")
+text = "Continue"
+
+[node name="MainMenu" type="Button" parent="MarginContainer/Panel/PauseMenuButtons"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_en03j")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/focus = SubResource("StyleBoxEmpty_y3tlf")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_g7wum")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_djgqd")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_ugdds")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_23aor")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_rutu1")
+text = "Main Menu"
+
+[node name="Exit" type="Button" parent="MarginContainer/Panel/PauseMenuButtons"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_en03j")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/focus = SubResource("StyleBoxEmpty_y3tlf")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_g7wum")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_djgqd")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_ugdds")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_23aor")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_rutu1")
+text = "Exit"
+
+[node name="Exit text" type="Control" parent="MarginContainer/Panel"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="MarginContainer/Panel/Exit text"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -115.0
+offset_top = -41.0
+offset_right = 118.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_en03j")
+theme_override_font_sizes/font_size = 20
+text = "Are you realy want to exit?
+"
+horizontal_alignment = 1
+
+[node name="Yes" type="Button" parent="MarginContainer/Panel/Exit text"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = 8.0
+offset_right = -27.0
+offset_bottom = 41.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_en03j")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/focus = SubResource("StyleBoxEmpty_t213c")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_xpy7b")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_voauw")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_r4j2l")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_pts06")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_xsgrj")
+text = "Yes
+"
+
+[node name="No" type="Button" parent="MarginContainer/Panel/Exit text"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 32.0
+offset_top = 8.0
+offset_right = 67.0
+offset_bottom = 41.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_en03j")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/focus = SubResource("StyleBoxEmpty_t213c")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_xpy7b")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_voauw")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_r4j2l")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_pts06")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_xsgrj")
+text = "No"
+
+[connection signal="pressed" from="MarginContainer/Panel/PauseMenuButtons/Continue" to="." method="_on_continue_pressed"]
+[connection signal="pressed" from="MarginContainer/Panel/PauseMenuButtons/MainMenu" to="." method="_on_main_menu_pressed"]
+[connection signal="pressed" from="MarginContainer/Panel/PauseMenuButtons/Exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="MarginContainer/Panel/Exit text/No" to="." method="_on_no_pressed"]

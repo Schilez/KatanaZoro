@@ -6,17 +6,19 @@ var save_data: SaveData
 
 func _ready() -> void:
 	load_game()
+	GameManager.load_data()
 
 func save_game():
-	return
+	
 	if not save_data:
 		save_data = SaveData.new()
+
 	var error = ResourceSaver.save(save_data, SAVE_PATH)
+	
 	if error == OK:
 			print("oyun başarıyla kaydedildi")
 	else:
 			print ("kaydetme katası: ", error)
-
 
 func load_game():
 	if ResourceLoader.exists(SAVE_PATH):

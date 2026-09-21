@@ -1,11 +1,7 @@
 extends Node2D
+
 @onready var player: CharacterBody2D = %Player
-@onready var margin_container: MarginContainer = $CanvasLayer/MarginContainer
 @onready var next: Area2D = $Next
-const THIRD_SCENE = preload("res://Scenes/third_scene.tscn")
-@onready var label: Label = %Label
-@onready var panel: Panel = $CanvasLayer/Panel
-@onready var margin_container_2: MarginContainer = $CanvasLayer/MarginContainer2
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -14,14 +10,8 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	if player.have_throwable==true:
-		margin_container.visible=true
-	else:
-		margin_container.visible=false
-	
 	if get_tree().get_nodes_in_group("Enemies").size()==0:
-		next.awake(THIRD_SCENE)
-	label.text= str(GameManager.kill_count)
+		next.awake()
 
 func setup_camera_limits():
 	# Oyuncunun içindeki kameraya ulaşıyoruz

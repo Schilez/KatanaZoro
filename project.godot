@@ -18,9 +18,10 @@ config/icon="res://Assets/Sprites/Başlıksız-1.png"
 
 [autoload]
 
-GameManager="*res://Scripts/Global.gd"
-SoundManager="*res://Scenes/real_theme_sound.tscn"
+GameManager="*res://Scripts/GameManager.gd"
 SaveManager="*res://Scripts/SaveManager.gd"
+SoundManager="*res://Scenes/sound_manager.tscn"
+Events="*res://Scripts/Events.gd"
 
 [display]
 
@@ -85,3 +86,4 @@ Throw={
 2d_physics/layer_6="EnemyHurtBox"
 2d_physics/layer_7="DoorHurtBox"
 2d_physics/layer_8="ObjectsLayer"
+2d_physics/layer_9="InteractabelLayer"

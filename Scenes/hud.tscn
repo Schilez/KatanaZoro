@@ -1,0 +1,131 @@
+[gd_scene load_steps=10 format=3 uid="uid://booq2r4n2vfw8"]
+
+[ext_resource type="Texture2D" uid="uid://qwcbvmefxx5e" path="res://Assets/UI_Materials/Textures/HUD1.png" id="1_8lhj8"]
+[ext_resource type="Script" path="res://Scripts/hud.gd" id="1_lvp6k"]
+[ext_resource type="FontFile" uid="uid://cuevahfjh8qfy" path="res://Assets/UI_Materials/Fonts/Lucida Bright Regular.ttf" id="2_h736i"]
+[ext_resource type="Texture2D" uid="uid://dansnjmlmlmbc" path="res://Assets/UI_Materials/Textures/Writting.png" id="3_liggq"]
+[ext_resource type="FontFile" uid="uid://ua4af1cl0qgi" path="res://Assets/UI_Materials/Fonts/fonnts.com-Krete-Book-.otf" id="4_ypeoe"]
+[ext_resource type="Texture2D" uid="uid://x7vee0ouxdnq" path="res://Assets/Sprites/Sprite-Sheet-1.21.png" id="6_akf8m"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x2ok3"]
+atlas = ExtResource("1_8lhj8")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5jesy"]
+atlas = ExtResource("3_liggq")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fk8ou"]
+atlas = ExtResource("6_akf8m")
+region = Rect2(1872, 666, 97.0001, 115)
+
+[node name="HUD" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_lvp6k")
+
+[node name="Top" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -960.0
+offset_right = 960.0
+offset_bottom = 1200.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+
+[node name="TextureRect" type="TextureRect" parent="Top"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_x2ok3")
+
+[node name="Control" type="Control" parent="Top"]
+layout_mode = 2
+
+[node name="ScoreLabel" type="Label" parent="Top/Control" groups=["Score"]]
+unique_name_in_owner = true
+layout_mode = 2
+offset_left = 144.0
+offset_top = 8.0
+offset_right = 205.0
+offset_bottom = 68.0
+theme_override_fonts/font = ExtResource("2_h736i")
+theme_override_font_sizes/font_size = 50
+text = "12
+"
+horizontal_alignment = 1
+
+[node name="Writing" type="MarginContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -960.0
+offset_top = -600.0
+offset_right = 960.0
+offset_bottom = 600.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+
+[node name="TextureRect" type="TextureRect" parent="Writing"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_5jesy")
+
+[node name="Control" type="Control" parent="Writing"]
+layout_mode = 2
+
+[node name="Interaction" type="Label" parent="Writing/Control"]
+layout_mode = 2
+offset_left = 787.0
+offset_top = 87.0
+offset_right = 1133.0
+offset_bottom = 137.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.760784, 0.576471, 0.0196078, 1)
+theme_override_fonts/font = ExtResource("4_ypeoe")
+theme_override_font_sizes/font_size = 40
+text = "Press \"E\" to Interact"
+horizontal_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -146.0
+offset_top = -3.0
+offset_right = -49.0
+offset_bottom = 112.0
+grow_horizontal = 0
+scale = Vector2(0.68, 0.626207)
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_fk8ou")
+
+[node name="Label" type="Label" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -33.0
+offset_top = -11.5
+offset_right = 33.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 100
+text = "The END"
+horizontal_alignment = 1

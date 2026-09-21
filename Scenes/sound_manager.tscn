@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://cp67pgc4b7trx"]
+
+[ext_resource type="Script" path="res://Scripts/sound_manager.gd" id="1_g0xrk"]
+
+[node name="SoundManager" type="Node"]
+script = ExtResource("1_g0xrk")
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+
+[node name="UIPlayer" type="AudioStreamPlayer" parent="."]
+max_polyphony = 4

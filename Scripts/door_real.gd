@@ -14,6 +14,8 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Enemies"):
 		enemy_in_range.append(body)
 
+func hit() -> void:
+	kill()
 
 func _on_area_2d_body_exited(body: Node2D) -> void:
 	if body.is_in_group("Enemies"):
@@ -22,8 +24,3 @@ func _on_area_2d_body_exited(body: Node2D) -> void:
 func kill():
 	stun_enemy()
 	queue_free()
-
-
-
-func _on_door_hurt_box_was_hit() -> void:
-	kill()

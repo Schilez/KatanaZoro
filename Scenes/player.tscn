@@ -1,11 +1,11 @@
-[gd_scene load_steps=18 format=3 uid="uid://ipvegy7blen4"]
+[gd_scene load_steps=19 format=3 uid="uid://ipvegy7blen4"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_w8xn6"]
 [ext_resource type="Texture2D" uid="uid://dd3gbccw8v6rs" path="res://Assets/Sprites/Sprite-Sheet-1.4.png" id="2_g6eji"]
 [ext_resource type="Texture2D" uid="uid://c6873feer58xu" path="res://Assets/Sprites/Sprite-Sheet-1.3.png" id="2_k1513"]
 [ext_resource type="Texture2D" uid="uid://cyi37fwgugudg" path="res://Assets/Sprites/Sprite-Sheet-1.5.png" id="4_1mkq7"]
 [ext_resource type="PackedScene" uid="uid://c1wuluik1s1lk" path="res://Scenes/weapon.tscn" id="5_pdawe"]
-[ext_resource type="Script" path="res://Scripts/player_hurt_box.gd" id="6_cjty7"]
+[ext_resource type="Script" path="res://Scripts/player_hurt_box.gd" id="6_fneso"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nmhua"]
 atlas = ExtResource("2_g6eji")
@@ -93,6 +93,9 @@ height = 194.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8ddup"]
 size = Vector2(107, 191)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3d7hu"]
+size = Vector2(246, 199)
+
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 collision_mask = 4
 script = ExtResource("1_w8xn6")
@@ -111,12 +114,20 @@ position = Vector2(0, 32)
 
 [node name="PlayerHurtBox" type="Area2D" parent="."]
 collision_layer = 16
-collision_mask = 32
-script = ExtResource("6_cjty7")
+collision_mask = 0
+script = ExtResource("6_fneso")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerHurtBox"]
 position = Vector2(0.5, 32.5)
 shape = SubResource("RectangleShape2D_8ddup")
+
+[node name="InteractionBox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 256
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionBox"]
+position = Vector2(-1, 29.5)
+shape = SubResource("RectangleShape2D_3d7hu")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(3, -172)
@@ -138,7 +149,7 @@ one_shot = true
 
 [connection signal="animation_finished" from="PlayerAnimatedSprite2D" to="." method="_on_player_animated_sprite_2d_animation_finished"]
 [connection signal="attack_finished" from="Weapon" to="." method="_on_weapon_attack_finished"]
-[connection signal="area_entered" from="PlayerHurtBox" to="PlayerHurtBox" method="_on_area_entered"]
-[connection signal="body_entered" from="PlayerHurtBox" to="PlayerHurtBox" method="_on_body_entered"]
-[connection signal="was_hit" from="PlayerHurtBox" to="." method="_on_player_hurt_box_was_hit"]
+[connection signal="area_entered" from="PlayerHurtBox" to="." method="_on_player_hurt_box_area_entered"]
+[connection signal="area_entered" from="InteractionBox" to="." method="_on_interaction_box_area_entered"]
+[connection signal="area_exited" from="InteractionBox" to="." method="_on_interaction_box_area_exited"]
 [connection signal="timeout" from="attack_timer" to="." method="_on_attack_timer_timeout"]

@@ -28,12 +28,18 @@ func start_game() -> void:
 	change_root_scene(MAIN_SCENE_PATH)
 
 func new_game() ->  void:
+	if current_level == 0:
+		SaveManager.load_game()
+		load_data()
+	
 	starting_score = 0
 	score = starting_score
 	current_level = 1
 	
 	SaveManager.save_data.score = score
 	SaveManager.save_data.current_level = current_level
+	
+	start_game()
 
 func next_level() -> void:
 	current_level += 1
@@ -42,8 +48,7 @@ func next_level() -> void:
 	
 	SaveManager.save_data.current_level= current_level
 	SaveManager.save_data.score= score
-	
-	SaveManager.save_game()
+
 
 func load_data() -> void:
 	starting_score = SaveManager.save_data.score

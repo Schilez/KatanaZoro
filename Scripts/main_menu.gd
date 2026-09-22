@@ -6,11 +6,15 @@ extends Control
 @onready var graphic: Label = $CanvasLayer/Panel/OptionButtons/Graphics/Graphic/Graphic
 @onready var right: Button = $CanvasLayer/Panel/OptionButtons/Graphics/Right/Right
 @onready var new_game: Control = $CanvasLayer/Panel/NewGame
+@onready var continu: Button = $CanvasLayer/Panel/MainButtons/Continue
 
 var graphic_level := 1
 
 func _ready() -> void:
 	GameManager.change_cursor(GameManager.CursorType.DEFAULT)
+	
+	if GameManager.current_level == 0:
+		continu.visible = false
 
 func _process(_delta: float) -> void:
 	match graphic_level:
@@ -51,9 +55,14 @@ func _on_right_pressed() -> void:
 	change_graphic(1)
 
 func _on_new_game_pressed() -> void:
-	SoundManager.ui_play(SoundManager.CLICK)
-	new_game.visible=true
-	main_buttons.visible=false
+	if GameManager.current_level == 0:
+		GameManager.new_game()
+	
+	else:
+		SoundManager.ui_play(SoundManager.CLICK)
+		new_game.visible=true
+		main_buttons.visible=false
+
 
 func _on_no_pressed() -> void:
 	SoundManager.ui_play(SoundManager.CLICK)
@@ -67,4 +76,3 @@ func _on_exit_pressed() -> void:
 func _on_yes_pressed() -> void:
 	SoundManager.ui_play(SoundManager.CLICK)
 	GameManager.new_game()
-	GameManager.start_game()

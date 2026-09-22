@@ -108,6 +108,7 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_rutu1")
 text = "Main Menu"
 
 [node name="Exit" type="Button" parent="MarginContainer/Panel/PauseMenuButtons"]
+visible = false
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_en03j")
 theme_override_font_sizes/font_size = 30

@@ -180,6 +180,7 @@ text = "Options"
 alignment = 2
 
 [node name="Exit" type="Button" parent="CanvasLayer/Panel/MainButtons"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 8
 theme_override_colors/font_color = Color(0.8, 0.615686, 0.298039, 1)

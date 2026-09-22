@@ -31,3 +31,8 @@ func _on_main_menu_pressed() -> void:
 	get_tree().paused = false
 	SoundManager.music_stop()
 	GameManager.change_root_scene(GameManager.MAIN_MENU_PATH)
+
+
+func _on_yes_pressed() -> void:
+	if is_inside_tree():
+		get_tree().quit()

@@ -204,4 +204,5 @@ text = "No"
 [connection signal="pressed" from="MarginContainer/Panel/PauseMenuButtons/Continue" to="." method="_on_continue_pressed"]
 [connection signal="pressed" from="MarginContainer/Panel/PauseMenuButtons/MainMenu" to="." method="_on_main_menu_pressed"]
 [connection signal="pressed" from="MarginContainer/Panel/PauseMenuButtons/Exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="MarginContainer/Panel/Exit text/Yes" to="." method="_on_yes_pressed"]
 [connection signal="pressed" from="MarginContainer/Panel/Exit text/No" to="." method="_on_no_pressed"]
